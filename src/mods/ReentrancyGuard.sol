@@ -10,6 +10,7 @@ error Reentrancy();
 /// @author Modified from Solmate
             (https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol)
 abstract contract ReentrancyGuard {
+    /// @dev Reentrancy guard value.
     uint256 private locked = 1;
 
     /// @dev Modifier to ensure reentrancy protection.
