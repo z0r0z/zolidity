@@ -5,7 +5,8 @@ error Reentrancy();
 
 /// @notice Reentrancy protection for smart contracts.
 /// @author z0r0z.eth
-/// @author Modified from Seaport (https://github.com/ProjectOpenSea/seaport/blob/main/contracts/lib/ReentrancyGuard.sol)
+/// @author Modified from Seaport 
+///         (https://github.com/ProjectOpenSea/seaport/blob/main/contracts/lib/ReentrancyGuard.sol)
 abstract contract ReentrancyGuard {
     uint256 private locked = 1;
 
