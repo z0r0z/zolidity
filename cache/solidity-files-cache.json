@@ -329,8 +329,8 @@
       }
     },
     "C:\\Users\\rossc\\klup\\src\\mods\\Subsidized.sol": {
-      "lastModificationDate": 1657482126397,
-      "contentHash": "2ddb5794913e2c8f311966ae83f5f977",
+      "lastModificationDate": 1657482575512,
+      "contentHash": "4b202d56d2d536273a1bff35eb20ab66",
       "sourceName": "src\\mods\\Subsidized.sol",
       "solcConfig": {
         "settings": {
@@ -360,15 +360,11 @@
         "src\\mods\\ReentrancyGuard.sol"
       ],
       "versionRequirement": ">=0.8.4",
-      "artifacts": {
-        "Subsidized": {
-          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.sol\\Subsidized.json"
-        }
-      }
+      "artifacts": {}
     },
     "C:\\Users\\rossc\\klup\\src\\test\\Subsidized.t.sol": {
-      "lastModificationDate": 1657476541156,
-      "contentHash": "dd4ff3ca8ffda12a9408009167919387",
+      "lastModificationDate": 1657482625649,
+      "contentHash": "d837be93ee57c0875b30c8d04246dc1a",
       "sourceName": "src\\test\\Subsidized.t.sol",
       "solcConfig": {
         "settings": {
@@ -406,9 +402,39 @@
         "src\\test\\utils\\mocks\\MockSubsidized.sol"
       ],
       "versionRequirement": ">=0.8.4",
+      "artifacts": {}
+    },
+    "C:\\Users\\rossc\\klup\\src\\test\\utils\\SubsidizedFactory.sol": {
+      "lastModificationDate": 1657482795981,
+      "contentHash": "d6bf9162f33e84062c0e4626387ba70c",
+      "sourceName": "src\\test\\utils\\SubsidizedFactory.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.15, <0.9.0",
       "artifacts": {
-        "SubsidizedTest": {
-          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.t.sol\\SubsidizedTest.json"
+        "Target": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "SubsidizedFactory.sol\\Target.json"
         }
       }
     },
@@ -445,11 +471,7 @@
         "src\\mods\\Subsidized.sol"
       ],
       "versionRequirement": ">=0.8.4",
-      "artifacts": {
-        "MockSubsidized": {
-          "0.8.15+commit.e14f2714.Windows.msvc": "MockSubsidized.sol\\MockSubsidized.json"
-        }
-      }
+      "artifacts": {}
     }
   }
 }

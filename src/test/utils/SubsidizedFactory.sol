@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity >=0.8.15 <0.9.0;
+/*
 import "ds-test/test.sol";
 import "./Subsidized.sol";
 
@@ -16,7 +17,7 @@ function build() public returns (address out) {
       }
    }
 }
-
+*/
 
 contract Target {
     function text() public pure returns (bytes32) {
@@ -26,7 +27,7 @@ contract Target {
         return msg.value;
     }
 }
-
+/*
 contract Test is DSTest {
     Hevm hevm;
     address target;
@@ -54,3 +55,4 @@ contract Test is DSTest {
         }
     }
 }
+*/

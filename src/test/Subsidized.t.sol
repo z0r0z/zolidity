@@ -16,6 +16,12 @@ contract SubsidizedTest is Test {
         mock = new MockSubsidized();
     }
 
+    function testDeploy() public {
+        new MockSubsidized();
+
+        console.log(unicode"✅ deploy test passed!");
+    }
+
     // VM Cheatcodes can be found in ./lib/forge-std/src/Vm.sol
     // Or at https://github.com/foundry-rs/forge-std
     function testSubsidized() public {

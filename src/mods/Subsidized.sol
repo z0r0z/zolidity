@@ -13,6 +13,7 @@ abstract contract Subsidized is ReentrancyGuard {
     using SafeTransferLib for address;
 
     uint256 internal constant MAX_PRIORITY_FEE = 40 * 10**9;
+    //uint256 internal constant 
     
     /// @notice Function modifier for returning gas costs to the caller.
     /// @dev Modified functions should be more than 21,000 gas units in order
