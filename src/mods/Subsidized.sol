@@ -14,7 +14,7 @@ abstract contract Subsidized is ReentrancyGuard {
 
     uint256 internal constant FEE_MAX = 40 * 10**9;
     
-    uint256 internal constant SUBSIDY_COST = 23601;
+    uint256 internal constant SUBSIDY_COST = 2572;
     
     /// @notice Function modifier for returning gas costs to the caller.
     /// @dev Modified functions should be more than 21,000 gas units in order
