@@ -360,7 +360,11 @@
         "src\\mods\\ReentrancyGuard.sol"
       ],
       "versionRequirement": ">=0.8.4",
-      "artifacts": {}
+      "artifacts": {
+        "Subsidized": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.sol\\Subsidized.json"
+        }
+      }
     },
     "C:\\Users\\rossc\\klup\\src\\test\\Subsidized.t.sol": {
       "lastModificationDate": 1657482625649,
@@ -402,11 +406,15 @@
         "src\\test\\utils\\mocks\\MockSubsidized.sol"
       ],
       "versionRequirement": ">=0.8.4",
-      "artifacts": {}
+      "artifacts": {
+        "SubsidizedTest": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.t.sol\\SubsidizedTest.json"
+        }
+      }
     },
     "C:\\Users\\rossc\\klup\\src\\test\\utils\\SubsidizedFactory.sol": {
-      "lastModificationDate": 1657482795981,
-      "contentHash": "d6bf9162f33e84062c0e4626387ba70c",
+      "lastModificationDate": 1657482894690,
+      "contentHash": "b332df8b2a5e6c4801fbce03b7d94e8f",
       "sourceName": "src\\test\\utils\\SubsidizedFactory.sol",
       "solcConfig": {
         "settings": {
@@ -471,7 +479,11 @@
         "src\\mods\\Subsidized.sol"
       ],
       "versionRequirement": ">=0.8.4",
-      "artifacts": {}
+      "artifacts": {
+        "MockSubsidized": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "MockSubsidized.sol\\MockSubsidized.json"
+        }
+      }
     }
   }
 }
