@@ -7,8 +7,8 @@ error Reentrancy();
 /// @author z0r0z.eth
 /// @author Modified from Seaport 
 ///         (https://github.com/ProjectOpenSea/seaport/blob/main/contracts/lib/ReentrancyGuard.sol)
-/// @author Modified from Solmate
-            (https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol)
+/// @author Modified from Solmate 
+///         (https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol)
 abstract contract ReentrancyGuard {
     /// @dev Reentrancy guard value.
     uint256 private locked = 1;
