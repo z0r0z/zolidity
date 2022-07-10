@@ -1,0 +1,8 @@
+out/
+cache/
+.env
+.env.prod
+.idea
+package-lock.json
+yarn.lock
+*.log
