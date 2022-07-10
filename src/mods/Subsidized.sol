@@ -19,8 +19,8 @@ abstract contract Subsidized {
         unchecked {
             // Return ETH to the caller, based on total gas cost (gas consumed * gas price).
             // Buffer the subsidy +21,200 gas units since caller is consuming 21,000 gas units for a transfer
-            // (which is not captured in the `gasleft()` calls).
-            // Tack on an additional 200 gas units for the arithmetic
+            // which is not captured in the `gasleft()` calls.
+            // Tack on an additional 200 gas units for the arithmetic.
             tx.origin.safeTransferETH((startGas - gasleft() + 21200) * tx.gasprice);
         }
     }
