@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.4;
 
-import {Subsidized} from "../../mods/Subsidized.sol";
+import {Subsidized} from "../../../mods/Subsidized.sol";
 
 contract MockSubsidized is Subsidized {
     uint256 counter;
