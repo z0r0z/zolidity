@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.4;
 
-import {SafeTransferLib} from "solmate/utils/SafeTransferLib.sol";
+import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 
 /// @notice Subsidized transactions for smart contracts.
 /// @author z0r0z.eth, @saucepoint
