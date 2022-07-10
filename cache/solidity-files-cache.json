@@ -1,0 +1,455 @@
+{
+  "_format": "ethers-rs-sol-cache-2",
+  "files": {
+    "C:\\Users\\rossc\\klup\\lib\\forge-std\\lib\\ds-test\\src/test.sol": {
+      "lastModificationDate": 1657476567086,
+      "contentHash": "a85cb92e605e48103a5375f81c8233f2",
+      "sourceName": "lib\\forge-std\\lib\\ds-test\\src/test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.5.0",
+      "artifacts": {
+        "DSTest": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "test.sol\\DSTest.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib\\forge-std\\src\\Script.sol": {
+      "lastModificationDate": 1657476557408,
+      "contentHash": "4216168db1101b2afcc999821ce29b04",
+      "sourceName": "lib\\forge-std\\src\\Script.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\forge-std\\src\\Vm.sol",
+        "lib\\forge-std\\src\\console.sol",
+        "lib\\forge-std\\src\\console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Script": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Script.sol\\Script.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib/forge-std/src/Test.sol": {
+      "lastModificationDate": 1657476557411,
+      "contentHash": "b1c1309d6773186ac88fee197a14749f",
+      "sourceName": "lib/forge-std/src/Test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\forge-std\\lib\\ds-test\\src/test.sol",
+        "lib\\forge-std\\src\\Script.sol",
+        "lib\\forge-std\\src\\Vm.sol",
+        "lib\\forge-std\\src\\console.sol",
+        "lib\\forge-std\\src\\console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Test": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Test.sol\\Test.json"
+        },
+        "stdError": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Test.sol\\stdError.json"
+        },
+        "stdMath": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Test.sol\\stdMath.json"
+        },
+        "stdStorage": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Test.sol\\stdStorage.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib\\forge-std\\src\\Vm.sol": {
+      "lastModificationDate": 1657476557413,
+      "contentHash": "4859392eba8e412dd3eb572038849434",
+      "sourceName": "lib\\forge-std\\src\\Vm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.6.0",
+      "artifacts": {
+        "Vm": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Vm.sol\\Vm.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib\\forge-std\\src\\console.sol": {
+      "lastModificationDate": 1657476557417,
+      "contentHash": "c8cf989d04bc2e3069e3d91facf3b69c",
+      "sourceName": "lib\\forge-std\\src\\console.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "console.sol\\console.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib\\forge-std\\src\\console2.sol": {
+      "lastModificationDate": 1657476557421,
+      "contentHash": "84e14285f3171a14073d0f81363094ac",
+      "sourceName": "lib\\forge-std\\src\\console2.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console2": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "console2.sol\\console2.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib\\solmate\\src\\tokens\\ERC20.sol": {
+      "lastModificationDate": 1657476571605,
+      "contentHash": "d2ad526807a28c2037b29b17aa2dbbc1",
+      "sourceName": "lib\\solmate\\src\\tokens\\ERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "ERC20.sol\\ERC20.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\lib/solmate/src/utils/SafeTransferLib.sol": {
+      "lastModificationDate": 1657476571635,
+      "contentHash": "f9955a14aec884f7e34473dca0a2b943",
+      "sourceName": "lib/solmate/src/utils/SafeTransferLib.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\solmate\\src\\tokens\\ERC20.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "SafeTransferLib": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "SafeTransferLib.sol\\SafeTransferLib.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\src\\mods\\ReentrancyGuard.sol": {
+      "lastModificationDate": 1657479436293,
+      "contentHash": "c523c877c956050e330bb6911e1f0cf8",
+      "sourceName": "src\\mods\\ReentrancyGuard.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.4",
+      "artifacts": {
+        "ReentrancyGuard": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "ReentrancyGuard.sol\\ReentrancyGuard.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\src\\mods\\Subsidized.sol": {
+      "lastModificationDate": 1657479641027,
+      "contentHash": "77bc4a02c06445bba7bbd8ab3029292a",
+      "sourceName": "src\\mods\\Subsidized.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\solmate\\src\\tokens\\ERC20.sol",
+        "lib/solmate/src/utils/SafeTransferLib.sol",
+        "src\\mods\\ReentrancyGuard.sol"
+      ],
+      "versionRequirement": ">=0.8.4",
+      "artifacts": {
+        "Subsidized": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.sol\\Subsidized.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\src\\test\\Subsidized.t.sol": {
+      "lastModificationDate": 1657476541156,
+      "contentHash": "dd4ff3ca8ffda12a9408009167919387",
+      "sourceName": "src\\test\\Subsidized.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\forge-std\\lib\\ds-test\\src/test.sol",
+        "lib\\forge-std\\src\\Script.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib\\forge-std\\src\\Vm.sol",
+        "lib\\forge-std\\src\\console.sol",
+        "lib\\forge-std\\src\\console2.sol",
+        "lib\\solmate\\src\\tokens\\ERC20.sol",
+        "lib/solmate/src/utils/SafeTransferLib.sol",
+        "src\\mods\\ReentrancyGuard.sol",
+        "src\\mods\\Subsidized.sol",
+        "src\\test\\utils\\mocks\\MockSubsidized.sol"
+      ],
+      "versionRequirement": ">=0.8.4",
+      "artifacts": {
+        "SubsidizedTest": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "Subsidized.t.sol\\SubsidizedTest.json"
+        }
+      }
+    },
+    "C:\\Users\\rossc\\klup\\src\\test\\utils\\mocks\\MockSubsidized.sol": {
+      "lastModificationDate": 1657476541161,
+      "contentHash": "a5d5c047f8d392eb356328901459ba35",
+      "sourceName": "src\\test\\utils\\mocks\\MockSubsidized.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib\\solmate\\src\\tokens\\ERC20.sol",
+        "lib/solmate/src/utils/SafeTransferLib.sol",
+        "src\\mods\\ReentrancyGuard.sol",
+        "src\\mods\\Subsidized.sol"
+      ],
+      "versionRequirement": ">=0.8.4",
+      "artifacts": {
+        "MockSubsidized": {
+          "0.8.15+commit.e14f2714.Windows.msvc": "MockSubsidized.sol\\MockSubsidized.json"
+        }
+      }
+    }
+  }
+}
