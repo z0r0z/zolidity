@@ -5,18 +5,19 @@ import {ReentrancyGuard} from "./ReentrancyGuard.sol";
 import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 
 /// @notice Subsidized transactions for smart contracts.
-/// @author z0r0z.eth, @saucepoint
+/// @author z0r0z.eth
+/// @custom:coauthor saucepoint
 abstract contract Subsidized is ReentrancyGuard {
     using SafeTransferLib for address;
     
     /// @notice Function modifier for returning gas costs to the caller.
     /// @dev Modified functions should be more than 21,000 gas units in order
-    /// to materially observe the subsidy.
+    ///      to materially observe the subsidy.
     modifier subsidized virtual {
+        _setReentrancyGuard();
+
         uint256 startGas = gasleft();
 
-        _setReentrancyGuard();
-        
         _;
 
         unchecked {
@@ -24,7 +25,7 @@ abstract contract Subsidized is ReentrancyGuard {
             // Buffer the subsidy +21,200 gas units since caller is consuming 21,000 gas units for a transfer
             // which is not captured in the `gasleft()` calls.
             // Tack on an additional 200 gas units for the arithmetic.
-            tx.origin.safeTransferETH((startGas - gasleft() + 21200) * tx.gasprice);
+            tx.origin.safeTransferETH((startGas - gasleft() + 23571) * tx.gasprice);
         }
 
         _clearReentrancyGuard();
