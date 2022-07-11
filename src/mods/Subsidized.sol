@@ -11,10 +11,8 @@ import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
-    /** 
-     * @dev Emitted if gas price over limit.
-     * @param emitter The contract that emits the error.
-     */
+    /// @dev Emitted if gas price over limit.
+    /// @param emitter The contract that emits the error.
     error FEE_MAX(address emitter);
 
     /// @dev Gas fee for modifier.
@@ -23,13 +21,10 @@ abstract contract Refunded is ReentrancyGuard {
     /// @dev Reasonable limit for gas price.
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
 
-    /**
-     * @dev You can cut out 10 opcodes in the creation-time EVM bytecode
-     * if you declare a constructor `payable`.
-     *
-     * For more in-depth information see here:
-     * https://forum.openzeppelin.com/t/a-collection-of-gas-optimisation-tricks/19966/5
-     */
+    /// @dev You can cut out 10 opcodes in the creation-time EVM bytecode
+    /// if you declare a constructor `payable`.
+    /// For more in-depth information see here:
+    /// https://forum.openzeppelin.com/t/a-collection-of-gas-optimisation-tricks/19966/5
     constructor() payable {}
 
     receive() external payable virtual {}
