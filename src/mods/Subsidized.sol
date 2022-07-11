@@ -44,7 +44,7 @@ abstract contract Refunded is ReentrancyGuard {
             fee := mul(add(BASE_FEE, sub(fee, gas())), gasprice())
         }
 
-        // Refund deposited ETH for `fee`.
+        // Refund deposited gas for `fee`.
         tx.origin.safeTransferETH(fee);
 
         // Clear reentrancy guard.
