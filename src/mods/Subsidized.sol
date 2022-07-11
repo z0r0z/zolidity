@@ -11,17 +11,17 @@ import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
-    /// @dev Emitted if gas price limit exceeded.
+    /// @dev Emitted if gas price over limit.
     error FEE_MAX();
 
-    /// @dev Gas fee for modifier with padding.
+    /// @dev Gas fee for modifier.
     uint256 internal constant BASE_FEE = 25433;
 
     /// @dev Reasonable limit for gas price.
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
     
-    /// @notice Modifier that refunds gas fee.
-    /// @dev Modified functions costing more than 21k gas
+    /// @notice Modifier to refund gas fee.
+    /// @dev Modified functions over 21k gas
     ///      benefit most from refund.
     modifier isRefunded virtual {
         // Memo `fee` at start of call.
@@ -39,7 +39,7 @@ abstract contract Refunded is ReentrancyGuard {
         _;
 
         // Memo `fee` at end of call.
-        // (BASE_FEE + (fee - gasleft())) * tx.gasprice
+        // ~~ (BASE_FEE + (fee - gasleft())) * tx.gasprice
         assembly {
             fee := mul(add(BASE_FEE, sub(fee, gas())), gasprice())
         }
