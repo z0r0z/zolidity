@@ -4,7 +4,7 @@ pragma solidity >=0.8.4;
 import {ReentrancyGuard} from "./ReentrancyGuard.sol";
 import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 
-/// @notice Gas refunding for smart contracts.
+/// @notice Gas refunds for smart contracts.
 /// @author z0r0z.eth
 /// @custom:coauthor saucepoint
 /// @dev Gas should be deposited for refunds.
@@ -21,8 +21,8 @@ abstract contract Refunded is ReentrancyGuard {
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
     
     /// @notice Modifier that refunds gas fee.
-    /// @dev Modified functions should cost more than 21k gas
-    ///      to benefit from refund.
+    /// @dev Modified functions costing more than 21k gas
+    ///      benefit most from refund.
     modifier isRefunded virtual {
         // Memo `fee` at start of call.
         uint256 fee = gasleft();
