@@ -21,9 +21,8 @@ abstract contract ReentrancyGuard {
     } 
 
     /// @dev Check guard sentinel value and set it.
-    ///      Proxy support by checking guard < 2.
     function setReentrancyGuard() internal virtual {
-        if (guard >= 2) revert REENTRANCY();
+        if (guard == 2) revert REENTRANCY();
 
         guard = 2;
     }
