@@ -1,2 +1,4 @@
 # Zolidity
-Efficient zero-fuss smart contracts.
+Zero-fuss smart contracts.
+
+Experiments on Ethereum.
