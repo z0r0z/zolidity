@@ -15,7 +15,7 @@ abstract contract Refunded is ReentrancyGuard {
     error FEE_MAX();
 
     /// @dev Gas fee for modifier with padding.
-    uint256 internal constant BASE_FEE = 3000;
+    uint256 internal constant BASE_FEE = 25500;
 
     /// @dev Reasonable limit for gas price.
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
