@@ -1,2 +1,2 @@
 # Zolidity
-Efficient and zero-fuss smart contracts.
+Efficient zero-fuss smart contracts.
