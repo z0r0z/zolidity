@@ -4,41 +4,50 @@ pragma solidity >=0.8.4;
 import {ReentrancyGuard} from "./ReentrancyGuard.sol";
 import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 
-error GAS_MAX();
-
-/// @notice Subsidized transactions for smart contracts.
+/// @notice Gas refunding for smart contracts.
 /// @author z0r0z.eth
 /// @custom:coauthor saucepoint
-abstract contract Subsidized is ReentrancyGuard {
+/// @dev Gas should be deposited for refunds.
+abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
-    uint256 internal constant FEE_MAX = 40 * 10**9;
-    
-    uint256 internal constant SUBSIDY_COST = 2572;
-    
-    /// @notice Function modifier for returning gas costs to the caller.
-    /// @dev Modified functions should be more than 21,000 gas units in order
-    ///      to materially observe the subsidy.
-    modifier subsidized virtual {
-        _setReentrancyGuard();
+    /// @dev Emitted if gas price limit exceeded.
+    error FEE_MAX();
 
-        uint256 start = gasleft();
-        
-        // Prevents malicious actor burning all the ETH on gas.
+    /// @dev Gas fee for modifier with padding.
+    uint256 internal constant BASE_FEE = 3000;
+
+    /// @dev Reasonable limit for gas price.
+    uint256 internal constant MAX_FEE = 4e10; // 4*10**10
+    
+    /// @notice Modifier that refunds gas fee.
+    /// @dev Modified functions should cost more than 21k gas
+    ///      to benefit from refund.
+    modifier isRefunded virtual {
+        // Memo `fee` at start of call.
+        uint256 fee = gasleft();
+
+        // Check and set reentrancy guard.
+        setReentrancyGuard();
+
+        // Check malicious refund against gas price limit.
         unchecked {
-            if (tx.gasprice > block.basefee + FEE_MAX) revert GAS_MAX();
+            if (tx.gasprice > block.basefee + MAX_FEE) revert FEE_MAX();
         }
 
+        // Run modified function.
         _;
 
-        unchecked {
-            // Return ETH to the caller, based on total gas cost (gas consumed * gas price).
-            // Buffer the subsidy +21,200 gas units since caller is consuming 21,000 gas units for a transfer
-            // which is not captured in the `gasleft()` calls.
-            // Tack on an additional 200 gas units for the arithmetic.
-            tx.origin.safeTransferETH((start - gasleft() + SUBSIDY_COST) * tx.gasprice);
+        // Memo `fee` at end of call.
+        // (BASE_FEE + (fee - gasleft())) * tx.gasprice
+        assembly {
+            fee := mul(add(BASE_FEE, sub(fee, gas())), gasprice())
         }
 
-        _clearReentrancyGuard();
+        // Refund deposited ETH for `fee`.
+        tx.origin.safeTransferETH(fee);
+
+        // Clear reentrancy guard.
+        clearReentrancyGuard();
     }
 }

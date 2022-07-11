@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.4;
 
-error Reentrancy();
-
 /// @notice Reentrancy protection for smart contracts.
 /// @author z0r0z.eth
 /// @author Modified from Seaport 
@@ -10,37 +8,41 @@ error Reentrancy();
 /// @author Modified from Solmate 
 ///         (https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol)
 abstract contract ReentrancyGuard {
+    /// @dev Throws if contract function is reentered.
+    error REENTRANCY();
+    
     /// @dev Reentrancy guard value.
     uint256 private locked = 1;
 
     /// @dev Modifier to ensure reentrancy protection.
     modifier nonReentrant() virtual {
-        // Ensure that the reentrancy guard is not already set.
-        if (locked >= 2) revert Reentrancy();
+        // Check reentrancy guard is not already set.
+        if (locked >= 2) revert REENTRANCY();
 
-        // Set the reentrancy guard.
+        // Set reentrancy guard.
         locked = 2;
-
+        
+        // Run modified function.
         _;
 
-        // Clear the reentrancy guard.
+        // Clear reentrancy guard.
         locked = 1;
     } 
 
-    /// @dev Internal function to ensure that the sentinel value for the
-    ///      reentrancy guard is not currently set and, if not, to set the
-    ///      sentinel value for the reentrancy guard.
-    function _setReentrancyGuard() internal virtual {
-        // Ensure that the reentrancy guard is not already set.
-        if (locked >= 2) revert Reentrancy();
+    /// @dev Ensure that sentinel value for 
+    ///      reentrancy guard is not currently set, and, 
+    ///      if not, set sentinel value for reentrancy guard.
+    function setReentrancyGuard() internal virtual {
+        // Check reentrancy guard is not already set.
+        if (locked >= 2) revert REENTRANCY();
 
-        // Set the reentrancy guard.
+        // Set reentrancy guard.
         locked = 2;
     }
 
-    /// @dev Internal function to unset the reentrancy guard sentinel value.
-    function _clearReentrancyGuard() internal virtual {
-        // Clear the reentrancy guard.
+    /// @dev Unset reentrancy guard sentinel value.
+    function clearReentrancyGuard() internal virtual {
+        // Clear reentrancy guard.
         locked = 1;
     }
 }
