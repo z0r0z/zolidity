@@ -12,13 +12,20 @@ abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
     /// @dev Emitted if gas price over limit.
-    error FEE_MAX();
+    /// @param emitter The contract that emits the error.
+    error FEE_MAX(address emitter);
 
     /// @dev Gas fee for modifier.
     uint256 internal constant BASE_FEE = 25433;
 
     /// @dev Reasonable limit for gas price.
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
+
+    /// @dev You can cut out 10 opcodes in the creation-time EVM bytecode
+    /// if you declare a constructor `payable`.
+    /// For more in-depth information see here:
+    /// https://forum.openzeppelin.com/t/a-collection-of-gas-optimisation-tricks/19966/5
+    constructor() payable {}
 
     receive() external payable virtual {}
     
@@ -34,7 +41,7 @@ abstract contract Refunded is ReentrancyGuard {
 
         // Check malicious refund against gas price limit.
         unchecked {
-            if (tx.gasprice > block.basefee + MAX_FEE) revert FEE_MAX();
+            if (tx.gasprice > block.basefee + MAX_FEE) revert FEE_MAX(address(this));
         }
 
         // Run modified function.
