@@ -11,6 +11,7 @@ import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
+<<<<<<< HEAD
     /// @dev Emitted if gas price limit exceeded.
     error FEE_MAX();
 
@@ -26,11 +27,29 @@ abstract contract Refunded is ReentrancyGuard {
     modifier isRefunded virtual {
         // Memo `fee` at start of call.
         uint256 fee = gasleft();
+=======
+    error FEE_MAX();
+
+    uint256 internal constant BASE_FEE = 2572;
+
+    uint256 internal constant MAX_FEE = 40 * 10**9;
+    
+    /// @notice Modifier that refunds gas cost to callers.
+    /// @dev Modified functions should cost more than 21k gas
+    ///      to benefit from refund.
+    modifier isRefunded virtual {
+        // Memo cost at start of call.
+        uint256 cost = gasleft();
+>>>>>>> 25a7f406b79707289fb962a18e0d9b683eb62e52
 
         // Check and set reentrancy guard.
         setReentrancyGuard();
 
+<<<<<<< HEAD
         // Check malicious refund against gas price limit.
+=======
+        // Check malicious refund with high gas price.
+>>>>>>> 25a7f406b79707289fb962a18e0d9b683eb62e52
         unchecked {
             if (tx.gasprice > block.basefee + MAX_FEE) revert FEE_MAX();
         }
@@ -38,6 +57,7 @@ abstract contract Refunded is ReentrancyGuard {
         // Run modified function.
         _;
 
+<<<<<<< HEAD
         // Memo `fee` at end of call.
         // (BASE_FEE + (fee - gasleft())) * tx.gasprice
         assembly {
@@ -46,6 +66,16 @@ abstract contract Refunded is ReentrancyGuard {
 
         // Refund deposited ETH for `fee`.
         tx.origin.safeTransferETH(fee);
+=======
+        // Memo cost at end of call.
+        // (BASE_FEE + (cost - gasleft())) * tx.gasprice
+        assembly {
+            cost := mul(add(BASE_FEE, sub(cost, gas())), gasprice())
+        }
+
+        // Refund deposited ETH for `cost`.
+        tx.origin.safeTransferETH(cost);
+>>>>>>> 25a7f406b79707289fb962a18e0d9b683eb62e52
 
         // Clear reentrancy guard.
         clearReentrancyGuard();
