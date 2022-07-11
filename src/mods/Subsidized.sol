@@ -11,52 +11,41 @@ import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
 abstract contract Refunded is ReentrancyGuard {
     using SafeTransferLib for address;
 
-    /// @dev Emitted if gas price over limit.
-    /// @param emitter The contract that emits the error.
-    error FEE_MAX(address emitter);
+    error GAS_MAX(address emitter);
 
-    /// @dev Gas fee for modifier.
-    uint256 internal constant BASE_FEE = 25433;
+    uint256 internal constant BASE_COST = 25433;
 
-    /// @dev Reasonable limit for gas price.
-    uint256 internal constant MAX_FEE = 4e10; // 4*10**10
+    uint256 internal constant GAS_PRICE_MAX = 4e10;
 
-    /// @dev You can cut out 10 opcodes in the creation-time EVM bytecode
-    /// if you declare a constructor `payable`.
-    /// For more in-depth information see here:
-    /// https://forum.openzeppelin.com/t/a-collection-of-gas-optimisation-tricks/19966/5
     constructor() payable {}
 
     receive() external payable virtual {}
     
-    /// @notice Modifier to refund gas fee.
     /// @dev Modified functions over 21k gas
     ///      benefit most from refund.
     modifier isRefunded virtual {
-        // Memo `fee` at start of call.
-        uint256 fee = gasleft();
+        // Memo starting gas.
+        uint256 refund = gasleft();
 
-        // Check and set reentrancy guard.
         setReentrancyGuard();
 
-        // Check malicious refund against gas price limit.
+        // Check malicious refund.
         unchecked {
-            if (tx.gasprice > block.basefee + MAX_FEE) revert FEE_MAX(address(this));
+            if (tx.gasprice > block.basefee + GAS_PRICE_MAX) 
+                revert GAS_MAX(address(this));
         }
 
-        // Run modified function.
         _;
 
-        // Memo `fee` at end of call.
-        // ~~ (BASE_FEE + (fee - gasleft())) * tx.gasprice
+        // Memo ending gas.
+        // (BASE_COST + (refund - gasleft())) * tx.gasprice
         assembly {
-            fee := mul(add(BASE_FEE, sub(fee, gas())), gasprice())
+            refund := mul(add(BASE_COST, sub(refund, gas())), gasprice())
         }
 
-        // Refund deposited gas for `fee`.
-        tx.origin.safeTransferETH(fee);
+        // Refund gas fee.
+        tx.origin.safeTransferETH(refund);
 
-        // Clear reentrancy guard.
         clearReentrancyGuard();
     }
 }
