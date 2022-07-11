@@ -8,41 +8,41 @@ pragma solidity >=0.8.4;
 /// @author Modified from Solmate 
 ///         (https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol)
 abstract contract ReentrancyGuard {
-    /// @dev Throws if contract function is reentered.
+    /// @dev Throws if function is reentered.
     error REENTRANCY();
     
     /// @dev Reentrancy guard value.
-    uint256 private locked = 1;
+    uint256 private guard = 1;
 
     /// @dev Modifier to ensure reentrancy protection.
     modifier nonReentrant() virtual {
-        // Check reentrancy guard is not already set.
-        if (locked >= 2) revert REENTRANCY();
+        // Check guard is not already set.
+        if (guard >= 2) revert REENTRANCY();
 
-        // Set reentrancy guard.
-        locked = 2;
+        // Set guard.
+        guard = 2;
         
         // Run modified function.
         _;
 
-        // Clear reentrancy guard.
-        locked = 1;
+        // Clear guard.
+        guard = 1;
     } 
 
     /// @dev Ensure that sentinel value for 
-    ///      reentrancy guard is not currently set, and, 
-    ///      if not, set sentinel value for reentrancy guard.
+    ///      guard is not set, and, if not,
+    ///      set sentinel value.
     function setReentrancyGuard() internal virtual {
-        // Check reentrancy guard is not already set.
-        if (locked >= 2) revert REENTRANCY();
+        // Check guard is not already set.
+        if (guard >= 2) revert REENTRANCY();
 
-        // Set reentrancy guard.
-        locked = 2;
+        // Set guard.
+        guard = 2;
     }
 
-    /// @dev Unset reentrancy guard sentinel value.
+    /// @dev Unset guard sentinel value.
     function clearReentrancyGuard() internal virtual {
-        // Clear reentrancy guard.
-        locked = 1;
+        // Clear guard.
+        guard = 1;
     }
 }
