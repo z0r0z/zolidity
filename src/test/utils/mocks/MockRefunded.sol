@@ -7,9 +7,8 @@ import {Refunded} from "../../../mods/Subsidized.sol";
 contract MockRefunded is Refunded {
     uint256 private counter;
 
-    receive() external payable {}
-
-    /// @dev Refunded transaction, where *most* of the gas-cost is returned to the caller (tx.origin).
+    /// @dev Refunded transaction, 
+    /// where *most* of the gas-cost is returned to the caller (tx.origin).
     function foo() public isRefunded {
         expensive();
     }
