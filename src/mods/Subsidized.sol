@@ -19,6 +19,8 @@ abstract contract Refunded is ReentrancyGuard {
 
     /// @dev Reasonable limit for gas price.
     uint256 internal constant MAX_FEE = 4e10; // 4*10**10
+
+    receive() external payable virtual {}
     
     /// @notice Modifier to refund gas fee.
     /// @dev Modified functions over 21k gas
