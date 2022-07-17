@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.4;
 
-import {Refunded} from "../../../mods/Subsidized.sol";
+import {Refunded} from "../../../utils/Refunded.sol";
 
 /// @notice Mock Refunded contract.
 contract MockRefunded is Refunded {
