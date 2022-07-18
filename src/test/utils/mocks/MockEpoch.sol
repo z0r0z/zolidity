@@ -3,6 +3,10 @@ pragma solidity >=0.8.4;
 
 import {StatelessEpoch} from "../../../utils/StatelessEpoch.sol";
 
+// TESTNET DEPLOYMENT: https://rinkeby.etherscan.io/address/0x1fabebc948c313894cd46b277dceb1319440e021
+// useStatelessEpoch()  26,399 gas
+// useEpoch()           28,433 gas
+
 /// @notice An example contract that inherits and utilizes StatelessEpoch
 contract MockEpoch is StatelessEpoch {
     // a typical state epoch thats managed by external calls (incrementEpoch())
