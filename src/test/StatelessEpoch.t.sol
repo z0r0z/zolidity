@@ -15,13 +15,16 @@ contract StatelessEpochTest is Test {
         
         mock = new MockEpoch();
 
+        // gas reports are according to forge
+        // I got different values on rinkeby :thonk:
+
         // incrementing epoch 0 to 1 costs 22,247 gas
         mock.incrementEpoch();
 
         // incrementing epoch 1 to 2 costs 11,297 gas
         mock.incrementEpoch();
 
-        // incrementing epochCounter[2] from 0 to 1 costs 22,469 gas 
+        // incrementing epochCounter[2] from 0 to 1 costs 22,469 gas
         mock.useEpoch();
 
         // incrementing epochCounter[2534796] from 0 to 1 costs 22,435 gas
@@ -35,12 +38,4 @@ contract StatelessEpochTest is Test {
     function testStatelessEpoch() public {
         mock.useStatelessEpoch();
     }
-    // function testA() public {
-    //     mock.useStatelessEpoch();
-    //     mock.useEpoch();
-    // }
-    // function testB() public {
-    //     mock.useEpoch();
-    //     mock.useStatelessEpoch();
-    // }
 }

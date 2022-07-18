@@ -12,22 +12,25 @@ contract MockEpoch is StatelessEpoch {
     // maps epoch => counter
     mapping(uint256 => uint256) public epochCounter;
 
-
-    function useEpoch() public {
-        unchecked { epochCounter[epoch]++; }
-    }
-
-    function incrementEpoch() public {
-        unchecked { epoch++; }
-    }
-
-    function useStatelessEpoch() public {
-        unchecked { epochCounter[getEpoch()]++; }
-    }
-
+    // Override the epochPeriod which is required when inheriting from StatelessEpoch
     function epochPeriod() public pure override returns (uint256) {
         // monthly epochs (seconds per month)
         // (60 * 60 * 24 * 365) / 12 = 2628000
         return 2628000;
+    }
+
+    // example usage of a state epoch
+    function useEpoch() public {
+        unchecked { epochCounter[epoch]++; }
+    }
+
+    // example usage of manually incrementing an epoch
+    function incrementEpoch() public {
+        unchecked { epoch++; }
+    }
+
+    // example usage of a stateless epoch
+    function useStatelessEpoch() public {
+        unchecked { epochCounter[getEpoch()]++; }
     }
 }
