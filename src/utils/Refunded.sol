@@ -1,17 +1,15 @@
-// SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity >=0.8.4;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
 
 import {ReentrancyGuard} from "./ReentrancyGuard.sol";
-import {SafeTransferLib} from "@solmate/utils/SafeTransferLib.sol";
+import {safeTransferETH} from "./SafeTransfer.sol";
 
 /// @notice Gas refunds for smart contracts.
 /// @author z0r0z.eth
 /// @custom:coauthor saucepoint
 /// @dev Gas should be deposited for refunds.
 abstract contract Refunded is ReentrancyGuard {
-    using SafeTransferLib for address;
-
-    error GAS_MAX(address emitter);
+    error GasMax(address emitter);
 
     uint256 internal constant BASE_COST = 25433;
 
@@ -20,10 +18,10 @@ abstract contract Refunded is ReentrancyGuard {
     constructor() payable {}
 
     receive() external payable virtual {}
-    
+
     /// @dev Modified functions over 21k gas
     ///      benefit most from refund.
-    modifier isRefunded virtual {
+    modifier isRefunded() virtual {
         // Memo starting gas.
         uint256 refund = gasleft();
 
@@ -31,8 +29,8 @@ abstract contract Refunded is ReentrancyGuard {
 
         // Check malicious refund.
         unchecked {
-            if (tx.gasprice > block.basefee + GAS_PRICE_MAX) 
-                revert GAS_MAX(address(this));
+            if (tx.gasprice > block.basefee + GAS_PRICE_MAX)
+                revert GasMax(address(this));
         }
 
         _;
@@ -44,7 +42,7 @@ abstract contract Refunded is ReentrancyGuard {
         }
 
         // Refund gas fee.
-        tx.origin.safeTransferETH(refund);
+        safeTransferETH(tx.origin, refund);
 
         clearReentrancyGuard();
     }

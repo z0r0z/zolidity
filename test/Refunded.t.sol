@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.4;
 
-import {MockRefunded} from './utils/mocks/MockRefunded.sol';
+import {MockRefunded} from "./utils/mocks/MockRefunded.sol";
 
 import "@std/Test.sol";
 
@@ -12,7 +12,7 @@ contract RefundedTest is Test {
 
     function setUp() public {
         console.log(unicode"🧪 Testing Refunded...");
-        
+
         mock = new MockRefunded();
     }
 

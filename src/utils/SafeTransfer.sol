@@ -5,6 +5,9 @@ pragma solidity ^0.8.4;
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/utils/SafeTransfer.sol)
 /// @author Modified from Solady (https://github.com/vectorized/solady/blob/main/src/utils/SafeTransferLib.sol)
 
+/// @dev The ETH transfer has failed.
+error ETHTransferFailed();
+
 /// @dev Sends `amount` (in wei) ETH to `to`.
 /// Reverts upon failure.
 function safeTransferETH(address to, uint256 amount) {
@@ -18,6 +21,9 @@ function safeTransferETH(address to, uint256 amount) {
         }
     }
 }
+
+/// @dev The ERC20 `approve` has failed.
+error ApproveFailed();
 
 /// @dev Sets `amount` of ERC20 `token` for `to` to manage on behalf of the current contract.
 /// Reverts upon failure.
@@ -56,6 +62,9 @@ function safeApprove(
     }
 }
 
+/// @dev The ERC20 `transfer` has failed.
+error TransferFailed();
+
 /// @dev Sends `amount` of ERC20 `token` from the current contract to `to`.
 /// Reverts upon failure.
 function safeTransfer(
@@ -92,6 +101,9 @@ function safeTransfer(
         mstore(0x40, memPointer) // Restore the memPointer.
     }
 }
+
+/// @dev The ERC20 `transferFrom` has failed.
+error TransferFromFailed();
 
 /// @dev Sends `amount` of ERC20 `token` from `from` to `to`.
 /// Reverts upon failure.

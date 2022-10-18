@@ -1,0 +1,9 @@
+{
+    "scripts": {
+      "lint": "prettier --write src/gov/**.sol src/utils/**.sol test/**.sol  test/utils/mocks/**.sol"
+    },
+    "devDependencies": {
+      "prettier": "^2.7.1",
+      "prettier-plugin-solidity": "^1.0.0-beta.24"
+    }
+  }

@@ -1,24 +1,24 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
+pragma solidity ^0.8.4;
 
-/// @dev Contracts
-import {ERC1155} from "@solmate/tokens/ERC1155.sol";
+/// @dev Contracts.
+import {ERC1155} from "@solbase/src/tokens/ERC1155/ERC1155.sol";
 
-/// @dev Libraries
-import {SafeCastLib} from "@solmate/utils/SafeCastLib.sol";
+/// @dev Libraries.
+import {SafeCastLib} from "@solbase/src/utils/SafeCastLib.sol";
 
 /// @notice Compound-like voting extension for ERC1155.
 /// @author z0r0z.eth
 abstract contract ERC1155Votes is ERC1155 {
-    /*//////////////////////////////////////////////////////////////
-                             LIBRARY USAGE
-    //////////////////////////////////////////////////////////////*/
+    /// -----------------------------------------------------------------------
+    /// Library Usage
+    /// -----------------------------------------------------------------------
 
     using SafeCastLib for uint256;
 
-    /*//////////////////////////////////////////////////////////////
-                                 EVENTS
-    //////////////////////////////////////////////////////////////*/
+    /// -----------------------------------------------------------------------
+    /// Events
+    /// -----------------------------------------------------------------------
 
     event DelegateChanged(
         address indexed delegator,
@@ -34,32 +34,43 @@ abstract contract ERC1155Votes is ERC1155 {
         uint256 newBalance
     );
 
-    /*//////////////////////////////////////////////////////////////
-                             VOTING STORAGE
-    //////////////////////////////////////////////////////////////*/
+    /// -----------------------------------------------------------------------
+    /// Checkpoint Storage
+    /// -----------------------------------------------------------------------
 
     mapping(address => mapping(uint256 => address)) internal _delegates;
 
     mapping(address => mapping(uint256 => uint256)) public numCheckpoints;
 
-    mapping(address => mapping(uint256 => mapping(uint256 => Checkpoint))) public checkpoints;
+    mapping(address => mapping(uint256 => mapping(uint256 => Checkpoint)))
+        public checkpoints;
 
     struct Checkpoint {
         uint64 fromTimestamp;
         uint192 votes;
     }
 
-    /*//////////////////////////////////////////////////////////////
-                             DELEGATION LOGIC
-    //////////////////////////////////////////////////////////////*/
+    /// -----------------------------------------------------------------------
+    /// Delegation Logic
+    /// -----------------------------------------------------------------------
 
-    function delegates(address account, uint256 id) public view virtual returns (address) {
+    function delegates(address account, uint256 id)
+        public
+        view
+        virtual
+        returns (address)
+    {
         address current = _delegates[account][id];
 
         return current == address(0) ? account : current;
     }
 
-    function getCurrentVotes(address account, uint256 id) public view virtual returns (uint256) {
+    function getCurrentVotes(address account, uint256 id)
+        public
+        view
+        virtual
+        returns (uint256)
+    {
         // Won't underflow because decrement only occurs if positive `nCheckpoints`.
         unchecked {
             uint256 nCheckpoints = numCheckpoints[account][id];
@@ -72,15 +83,10 @@ abstract contract ERC1155Votes is ERC1155 {
     }
 
     function getPriorVotes(
-        address account, 
+        address account,
         uint256 id,
         uint256 timestamp
-    )
-        public
-        view
-        virtual
-        returns (uint256)
-    {
+    ) public view virtual returns (uint256) {
         require(block.timestamp > timestamp, "UNDETERMINED");
 
         uint256 nCheckpoints = numCheckpoints[account][id];
@@ -127,7 +133,12 @@ abstract contract ERC1155Votes is ERC1155 {
 
         emit DelegateChanged(msg.sender, currentDelegate, delegatee, id);
 
-        _moveDelegates(currentDelegate, delegatee, id, balanceOf[msg.sender][id]);
+        _moveDelegates(
+            currentDelegate,
+            delegatee,
+            id,
+            balanceOf[msg.sender][id]
+        );
     }
 
     function _moveDelegates(
@@ -144,7 +155,13 @@ abstract contract ERC1155Votes is ERC1155 {
                     ? checkpoints[srcRep][id][srcRepNum - 1].votes
                     : 0;
 
-                _writeCheckpoint(srcRep, id, srcRepNum, srcRepOld, srcRepOld - amount);
+                _writeCheckpoint(
+                    srcRep,
+                    id,
+                    srcRepNum,
+                    srcRepOld,
+                    srcRepOld - amount
+                );
             }
 
             if (dstRep != address(0)) {
@@ -154,7 +171,13 @@ abstract contract ERC1155Votes is ERC1155 {
                     ? checkpoints[dstRep][id][dstRepNum - 1].votes
                     : 0;
 
-                _writeCheckpoint(dstRep, id, dstRepNum, dstRepOld, dstRepOld + amount);
+                _writeCheckpoint(
+                    dstRep,
+                    id,
+                    dstRepNum,
+                    dstRepOld,
+                    dstRepOld + amount
+                );
             }
         }
     }
@@ -175,7 +198,8 @@ abstract contract ERC1155Votes is ERC1155 {
                 checkpoints[delegatee][id][nCheckpoints - 1].fromTimestamp ==
                 timestamp
             ) {
-                checkpoints[delegatee][id][nCheckpoints - 1].votes = newVotes.safeCastTo192();
+                checkpoints[delegatee][id][nCheckpoints - 1].votes = newVotes
+                    .safeCastTo192();
             } else {
                 checkpoints[delegatee][id][nCheckpoints] = Checkpoint(
                     timestamp,
