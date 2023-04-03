@@ -29,8 +29,9 @@ abstract contract Refunded is ReentrancyGuard {
 
         // Check malicious refund.
         unchecked {
-            if (tx.gasprice > block.basefee + GAS_PRICE_MAX)
+            if (tx.gasprice > block.basefee + GAS_PRICE_MAX) {
                 revert GasMax(address(this));
+            }
         }
 
         _;

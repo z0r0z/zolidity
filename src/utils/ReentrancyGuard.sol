@@ -22,7 +22,9 @@ abstract contract ReentrancyGuard {
 
     /// @dev Check guard sentinel value and set it.
     function setReentrancyGuard() internal virtual {
-        if (guard == 2) revert Reentrancy();
+        if (guard == 2) {
+            revert Reentrancy();
+        }
 
         guard = 2;
     }

@@ -1,9 +1,13 @@
 {
-    "scripts": {
-      "lint": "prettier --write src/gov/**.sol src/utils/**.sol test/**.sol  test/utils/mocks/**.sol"
-    },
-    "devDependencies": {
-      "prettier": "^2.7.1",
-      "prettier-plugin-solidity": "^1.0.0-beta.24"
-    }
+  "name": "zolidity",
+  "license": "MIT",
+  "version": "0.0.9",
+  "description": "Zero-fuss smart contracts. Experiments on Ethereum.",
+  "files": [
+    "src/**/*.sol"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/z0r0z/zolidity.git"
   }
+}

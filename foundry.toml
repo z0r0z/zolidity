@@ -1,7 +1,7 @@
 [profile.default]
-solc = "0.8.17"
-bytecode_hash = "none"
-optimizer_runs = 1000000
+solc = "0.8.19"
+optimizer = true
+optimizer_runs = 9_999_999
 
 # Configure remappings
 remappings = [
@@ -10,4 +10,7 @@ remappings = [
 ]
 
 [profile.intense.fuzz]
-runs = 10000
+runs = 5_000
+
+[fmt]
+line_length = 100
