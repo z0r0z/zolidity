@@ -1,8 +1,9 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+// SPDX-License-Identifier: AGPL-3.0-only
+pragma solidity 0.8.20;
 
-/// @notice ETH, ERC721 and ERC1155 receiver logic.
-contract Receiver {
+/// @dev Token receiver logic
+/// @author Zolidity 
+abstract contract Receiver {
     /// -----------------------------------------------------------------------
     /// ERC165 Introspection
     /// -----------------------------------------------------------------------
@@ -11,11 +12,11 @@ contract Receiver {
         bytes4 interfaceId
     ) public view virtual returns (bool) {
         return
-            // ERC165 interface ID for ERC165.
+            // ERC165 interface ID for ERC165
             interfaceId == this.supportsInterface.selector ||
-            // ERC165 Interface ID for ERC721TokenReceiver.
+            // ERC165 Interface ID for ERC721TokenReceiver
             interfaceId == this.onERC721Received.selector ||
-            // ERC165 Interface ID for ERC1155TokenReceiver.
+            // ERC165 Interface ID for ERC1155TokenReceiver
             interfaceId == 0x4e2312e0;
     }
 
@@ -23,7 +24,7 @@ contract Receiver {
     /// ETH Receiver
     /// -----------------------------------------------------------------------
 
-    receive() external payable {}
+    receive() external payable virtual {}
 
     /// -----------------------------------------------------------------------
     /// ERC721 Receiver
@@ -32,7 +33,7 @@ contract Receiver {
     function onERC721Received(
         address,
         address,
-        uint256,
+        uint,
         bytes calldata
     ) public payable virtual returns (bytes4) {
         return this.onERC721Received.selector;
@@ -45,8 +46,8 @@ contract Receiver {
     function onERC1155Received(
         address,
         address,
-        uint256,
-        uint256,
+        uint,
+        uint,
         bytes calldata
     ) public payable virtual returns (bytes4) {
         return this.onERC1155Received.selector;
@@ -55,8 +56,8 @@ contract Receiver {
     function onERC1155BatchReceived(
         address,
         address,
-        uint256[] calldata,
-        uint256[] calldata,
+        uint[] calldata,
+        uint[] calldata,
         bytes calldata
     ) public payable virtual returns (bytes4) {
         return this.onERC1155BatchReceived.selector;
