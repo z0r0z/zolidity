@@ -8,8 +8,8 @@ contract ERC20 {
     /// ERC20 events
     /// -----------------------------------------------------------------------
 
-    event Approval(address indexed from, address indexed to, uint256 amt);
     event Transfer(address indexed from, address indexed to, uint256 amt);
+    event Approval(address indexed from, address indexed to, uint256 amt);
 
     /// -----------------------------------------------------------------------
     /// ERC20 storage
