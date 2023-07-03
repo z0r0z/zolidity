@@ -1,4 +1,4 @@
-ERC20Test:testTransfer() (gas: 32648)
+ERC20Test:testTransfer() (gas: 32659)
 RefundedTest:testDeploy() (gas: 147594)
 RefundedTest:testRefunded() (gas: 47651)
 RefundedTest:testUnrefunded() (gas: 45125)
