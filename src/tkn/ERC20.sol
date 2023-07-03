@@ -3,7 +3,7 @@ pragma solidity 0.8.20;
 
 /// @dev ERC20 token
 /// @author Zolidity
-abstract contract ERC20 {
+contract ERC20 {
     /// -----------------------------------------------------------------------
     /// ERC20 events
     /// -----------------------------------------------------------------------
@@ -17,40 +17,44 @@ abstract contract ERC20 {
 
     mapping(address => mapping(address => uint256)) public allowance;
     mapping(address => uint256) public balanceOf;
-
     uint256 public totalSupply;
 
     /// -----------------------------------------------------------------------
     /// ERC20 metadata immutables
     /// -----------------------------------------------------------------------
 
+    bytes32 immutable _name;
+    bytes32 immutable _symbol;
     uint256 public constant decimals = 18;
 
-    string public name = string(abi.encodePacked(_immutable(0)));
-    string public symbol = string(abi.encodePacked(_immutable(20)));
+    function name() public view returns (string memory) {
+        return string(abi.encodePacked(_name));
+    }
 
-    function _immutable(uint256 pos) internal pure returns (uint256 out) {
-        assembly {
-            out :=
-                calldataload(
-                    add(
-                        sub(calldatasize(), add(shr(240, calldataload(sub(calldatasize(), 2))), 2)), pos
-                    )
-                )
-        }
+    function symbol() public view returns (string memory) {
+        return string(abi.encodePacked(_symbol));
+    }
+
+    /// -----------------------------------------------------------------------
+    /// Constructor
+    /// -----------------------------------------------------------------------
+
+    constructor(bytes32 __name, bytes32 __symbol) payable {
+        _name = __name;
+        _symbol = __symbol;
     }
 
     /// -----------------------------------------------------------------------
     /// ERC20 logic
     /// -----------------------------------------------------------------------
 
-    function approve(address to, uint256 amt) external payable returns (bool) {
+    function approve(address to, uint256 amt) public payable returns (bool) {
         allowance[msg.sender][to] = amt;
         emit Approval(msg.sender, to, amt);
         return true;
     }
 
-    function transfer(address to, uint256 amt) external payable returns (bool) {
+    function transfer(address to, uint256 amt) public payable returns (bool) {
         balanceOf[msg.sender] -= amt;
         unchecked {
             balanceOf[to] += amt;
@@ -59,7 +63,7 @@ abstract contract ERC20 {
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 amt) external payable returns (bool) {
+    function transferFrom(address from, address to, uint256 amt) public payable returns (bool) {
         allowance[from][msg.sender] -= amt;
         balanceOf[from] -= amt;
         unchecked {
