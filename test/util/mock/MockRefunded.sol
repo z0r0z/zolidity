@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity 0.8.20;
 
-import '../../../src/util/Refunded.sol';
+import "../../../src/util/Refunded.sol";
 
 /// @dev Mock Refunded contract
 contract MockRefunded is Refunded {
-    uint counter;
+    uint256 counter;
 
     /// @dev Refunded transaction,
     /// where *most* of gas-cost returned to caller (tx.origin)
@@ -20,7 +20,7 @@ contract MockRefunded is Refunded {
 
     /// @dev Gas-expensive function
     function expensive() public payable {
-        for (uint i; i < 50; i++) {
+        for (uint256 i; i < 50; i++) {
             counter++;
         }
     }

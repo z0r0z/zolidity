@@ -2,14 +2,15 @@
 pragma solidity 0.8.20;
 
 /// @dev Reentrancy guard logic
-/// @author Zolidity 
+/// @author Zolidity
 abstract contract ReentrancyGuard {
     error Reentrancy();
 
-    uint guard = 1;
+    uint256 guard = 1;
 
     modifier nonReentrant() {
-        setReentrancyGuard();_;
+        setReentrancyGuard();
+        _;
         clearReentrancyGuard();
     }
 

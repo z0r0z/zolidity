@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity 0.8.20;
 
-import {safeTransferETH} from './SafeTransfer.sol';
-import './ReentrancyGuard.sol';
+import {safeTransferETH} from "./SafeTransfer.sol";
+import "./ReentrancyGuard.sol";
 
 /// @dev Gas refund logic
-/// @author Zolidity 
+/// @author Zolidity
 abstract contract Refunded is ReentrancyGuard {
     error GasMax(address caller);
 
-    uint constant BASE_COST = 25433;
-    uint constant GAS_PRICE_MAX = 4e10;
+    uint256 constant BASE_COST = 25433;
+    uint256 constant GAS_PRICE_MAX = 4e10;
 
     receive() external payable virtual {}
 
@@ -18,14 +18,15 @@ abstract contract Refunded is ReentrancyGuard {
     ///      benefit most from refund
     modifier refunded() {
         // Memo starting gas
-        uint refund = gasleft();
+        uint256 refund = gasleft();
 
         setReentrancyGuard();
 
         // Check malicious refund
         unchecked {
-            if (tx.gasprice > block.basefee + GAS_PRICE_MAX)
+            if (tx.gasprice > block.basefee + GAS_PRICE_MAX) {
                 revert GasMax(address(this));
+            }
         }
 
         _;

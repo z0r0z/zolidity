@@ -5,7 +5,7 @@ pragma solidity 0.8.20;
 /// @author Zolidity
 
 /// @dev Safe ETH transfer
-function safeTransferETH(address to, uint amt) {
+function safeTransferETH(address to, uint256 amt) {
     assembly {
         if iszero(call(gas(), to, amt, 0, 0, 0, 0)) {
             mstore(0x00, 0xb12d13eb)
@@ -15,12 +15,12 @@ function safeTransferETH(address to, uint amt) {
 }
 
 /// @dev Safe ERC20 approve
-function safeApprove(address tkn, address to, uint amt) {
+function safeApprove(address tkn, address to, uint256 amt) {
     assembly {
         let memPointer := mload(0x40)
 
         mstore(0x00, 0x095ea7b3)
-        mstore(0x20, to) 
+        mstore(0x20, to)
         mstore(0x40, amt)
 
         if iszero(
@@ -38,12 +38,12 @@ function safeApprove(address tkn, address to, uint amt) {
 }
 
 /// @dev Safe ERC20 transfer
-function safeTransfer(address tkn, address to, uint amt) {
+function safeTransfer(address tkn, address to, uint256 amt) {
     assembly {
         let memPointer := mload(0x40)
 
         mstore(0x00, 0xa9059cbb)
-        mstore(0x20, to) 
+        mstore(0x20, to)
         mstore(0x40, amt)
 
         if iszero(
@@ -61,13 +61,13 @@ function safeTransfer(address tkn, address to, uint amt) {
 }
 
 /// @dev Safe ERC20 transferFrom
-function safeTransferFrom(address tkn, address from, address to, uint amt) {
+function safeTransferFrom(address tkn, address from, address to, uint256 amt) {
     assembly {
         let memPointer := mload(0x40)
 
         mstore(0x00, 0x23b872dd)
-        mstore(0x20, from) 
-        mstore(0x40, to) 
+        mstore(0x20, from)
+        mstore(0x40, to)
         mstore(0x60, amt)
 
         if iszero(
