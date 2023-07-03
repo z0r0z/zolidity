@@ -14,16 +14,16 @@ contract ERC20Test is Test {
 
     constructor() payable {}
 
-    function setUp() external payable {
+    function setUp() public payable {
         console.log(unicode"🧪 Testing ERC20...");
         tkn.mint(alice, 100 ether);
     }
 
-    function testDeploy() external payable {
+    function testDeploy() public payable {
         new MockERC20(META, META);
     }
 
-    function testTransfer(address bob, uint256 amt) external payable {
+    function testTransfer(address bob, uint256 amt) public payable {
         vm.assume(bob != alice);
         vm.assume(amt <= tkn.balanceOf(alice));
         uint256 initialBobBalance = tkn.balanceOf(bob);
@@ -41,7 +41,7 @@ contract ERC20Test is Test {
         assertEq(tkn.allowance(alice, bob), amt);
     }
 
-    function testTransferFrom(address bob, uint256 amt) external payable {
+    function testTransferFrom(address bob, uint256 amt) public payable {
         vm.assume(amt <= tkn.allowance(alice, bob));
         testApprove(bob, amt);
 
@@ -50,7 +50,7 @@ contract ERC20Test is Test {
         assertEq(tkn.balanceOf(bob), amt);
     }
 
-    function testMint(address bob, uint256 amt) external payable {
+    function testMint(address bob, uint256 amt) public payable {
         vm.assume(amt <= type(uint256).max - tkn.totalSupply());
         uint256 initialSupply = tkn.totalSupply();
         tkn.mint(bob, amt);
@@ -58,7 +58,7 @@ contract ERC20Test is Test {
         assertEq(tkn.balanceOf(bob), amt);
     }
 
-    function testBurn(address bob, uint256 amt) external payable {
+    function testBurn(address bob, uint256 amt) public payable {
         vm.assume(amt <= tkn.totalSupply());
         tkn.mint(bob, amt);
         uint256 initialSupply = tkn.totalSupply();
