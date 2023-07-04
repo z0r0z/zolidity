@@ -3,7 +3,7 @@ pragma solidity 0.8.20;
 
 /// @dev ERC20 token
 /// @author Zolidity
-abstract contract ERC20 {
+contract ERC20 {
     event Transfer(address indexed from, address indexed to, uint amt);
     event Approval(address indexed from, address indexed to, uint amt);
 
@@ -21,7 +21,7 @@ abstract contract ERC20 {
     constructor(string memory $name, string memory $symbol, uint supply) {
         name = $name;
         symbol = $symbol;
-        if (supply != 0) _mint(tx.origin, supply);
+        if (supply != 0) totalSupply = balanceOf[tx.origin] = supply;
     }
 
     // LOGIC
@@ -32,16 +32,13 @@ abstract contract ERC20 {
     }
 
     function transfer(address to, uint amt) public payable returns (bool) {
-        balanceOf[msg.sender] -= amt;
-        unchecked {
-            balanceOf[to] += amt;
-        }
-        emit Transfer(msg.sender, to, amt);
-        return true;
+        return transferFrom(msg.sender, to, amt);
     }
 
     function transferFrom(address from, address to, uint amt) public payable returns (bool) {
-        allowance[from][msg.sender] -= amt;
+        if (msg.sender != from)
+            if (allowance[from][msg.sender] != type(uint).max)
+                allowance[from][msg.sender] -= amt;
         balanceOf[from] -= amt;
         unchecked {
             balanceOf[to] += amt;

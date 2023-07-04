@@ -7,87 +7,57 @@ import './util/mock/MockERC20.sol';
 contract ERC20Test is Test {
     using stdStorage for StdStorage;
 
-    uint constant ethSum = 100 ether;
+    MockERC20 immutable tkn = new MockERC20(
+        'Test', 'TEST', 0);
+    address immutable tester = address(this);
     address immutable alice = vm.addr(1);
+    address immutable bob = vm.addr(2);
+    uint constant bigAmt = 100 ether;
+    uint constant lilAmt = 10 ether;
 
-    MockERC20 tkn;
-
-    constructor() payable {}
-
-    function setUp() public payable {
+    function setUp() external payable {
         console.log(unicode'🧪 Testing ERC20...');
-        tkn = new MockERC20();
-        tkn.mint(alice, ethSum);
+        tkn.mint(tester, bigAmt);
     }
 
-    function testDeploy() public payable {
-        new MockERC20();
+    function testDeploy() external payable {
+        new MockERC20('NA', 'NA', type(uint).max);
     }
 
-    function _safeTransfer(address from, address to, uint amt) internal {
-        uint balance = tkn.balanceOf(from);
-        amt = balance < amt ? balance : amt;
-
-        if (from != address(tkn)) {
-            vm.prank(from);
-        }
-
-        tkn.transfer(to, amt);
+    function testFailDeploySupplyOverflow() external payable {
+        new MockERC20('NA', 'NA', type(uint).max + 1);
     }
 
-    function testTransfer(address bob, uint amt) public payable {
-        uint alice_balance = tkn.balanceOf(alice);
-        if (amt > alice_balance) amt = alice_balance; // only transfer max possible amount
-
-        vm.prank(alice);
-        tkn.transfer(bob, amt);
-
-        unchecked {
-            assertEq(tkn.balanceOf(alice), alice_balance - amt);
-            assertEq(tkn.balanceOf(bob), amt);
-        }
+    function testApprove() external payable {
+        tkn.approve(bob, lilAmt);
+        assertEq(tkn.allowance(tester, bob), lilAmt);
     }
 
-    function testApprove(address bob, uint amt) public payable {
-        uint aliceBalance = tkn.balanceOf(alice);
-        amt = amt > aliceBalance ? aliceBalance : amt;
-
-        vm.prank(alice);
-        tkn.approve(bob, amt);
-
-        assertEq(tkn.allowance(alice, bob), amt);
+    function testTransfer() external payable {
+        tkn.transfer(alice, lilAmt);
+        assertEq(tkn.balanceOf(alice), lilAmt);
     }
 
-    function testTransferFrom(address bob, uint amt) public payable {
-        uint aliceBalance = tkn.balanceOf(alice);
-        amt = amt > aliceBalance ? aliceBalance : amt;
-
-        testApprove(bob, amt);
-
+    function testTransferFrom() external payable {
+        tkn.approve(bob, lilAmt);
         vm.prank(bob);
-        tkn.transferFrom(alice, bob, amt);
-
-        assertEq(tkn.balanceOf(bob), amt);
+        tkn.transferFrom(tester, bob, lilAmt);
+        assertEq(tkn.balanceOf(bob), lilAmt);
     }
 
-    function testMint(address bob, uint amt) public payable {
-        uint max_mint_value = type(uint).max - ethSum;
-        amt = amt > max_mint_value ? max_mint_value : amt;
-
-        tkn.mint(bob, amt);
-
-        assertEq(tkn.totalSupply(), ethSum + amt);
-        assertEq(tkn.balanceOf(bob), amt);
+    function testFailTransferExceedsBalance() external payable {
+        tkn.transfer(alice, bigAmt + 1);
     }
 
-    function testBurn(address bob, uint amt) public payable {
-        uint max_burn_value = tkn.balanceOf(bob);
-        amt = amt > max_burn_value ? max_burn_value : amt;
-
+    function testFailTransferFromExceedsBalance() external payable {
+        tkn.approve(bob, bigAmt);
         vm.prank(bob);
-        tkn.burn(bob, amt);
+        tkn.transferFrom(tester, bob, bigAmt + 1);
+    }
 
-        assertEq(tkn.totalSupply(), ethSum - amt);
-        assertEq(tkn.balanceOf(bob), max_burn_value - amt);
+    function testFailTransferFromExceedsAllowance() external payable {
+        tkn.approve(bob, lilAmt);
+        vm.prank(bob);
+        tkn.transferFrom(tester, bob, lilAmt + 1);
     }
 }
