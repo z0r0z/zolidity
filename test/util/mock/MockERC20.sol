@@ -5,7 +5,7 @@ import '../../../src/tkn/ERC20.sol';
 
 /// @dev Mock ERC20 contract
 contract MockERC20 is ERC20 {
-    constructor(bytes32 meta) payable ERC20(meta) {}
+    constructor(string memory name, string memory symbol) payable ERC20(name, symbol) {}
 
     function mint(address to, uint amt) external payable {
         _mint(to, amt);

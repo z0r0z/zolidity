@@ -10,33 +10,18 @@ abstract contract ERC20 {
     // STORAGE
     mapping(address usr => mapping(address to => uint)) public allowance;
     mapping(address usr => uint) public balanceOf;
+
     uint public totalSupply;
 
     // METADATA
     uint public constant decimals = 18;
-    bytes32 immutable _meta;
-
-    function name() public view returns (string memory) {
-        return _clean(bytes16(_meta >> 128));
-    }
-
-    function symbol() public view returns (string memory) {
-        return _clean(bytes16(_meta));
-    }
-
-    function _clean(bytes16 _bytes) private pure returns (string memory) {
-        uint8 i = 15;
-        while (i != 0 && _bytes[i] == '') --i;
-        bytes memory result = new bytes(i + 1);
-        for (uint8 j; j <= i; ++j) {
-            result[j] = _bytes[j];
-        }
-        return string(result);
-    }
+    string public name;
+    string public symbol;
 
     // CREATION
-    constructor(bytes32 meta) {
-        _meta = meta;
+    constructor(string memory _name, string memory _symbol) {
+        name = _name;
+        symbol = _symbol;
     }
 
     // LOGIC
