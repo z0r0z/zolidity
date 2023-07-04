@@ -6,4 +6,6 @@ optimizer = true
 optimizer_runs = 9_999_999
 
 [fmt]
+quote_style = 'single'
+int_types = 'short'
 line_length = 100

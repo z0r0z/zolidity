@@ -28,7 +28,7 @@ abstract contract Receiver {
     /// ERC721 Receiver
     /// -----------------------------------------------------------------------
 
-    function onERC721Received(address, address, uint256, bytes calldata)
+    function onERC721Received(address, address, uint, bytes calldata)
         public
         payable
         virtual
@@ -41,7 +41,7 @@ abstract contract Receiver {
     /// ERC1155 Receiver
     /// -----------------------------------------------------------------------
 
-    function onERC1155Received(address, address, uint256, uint256, bytes calldata)
+    function onERC1155Received(address, address, uint, uint, bytes calldata)
         public
         payable
         virtual
@@ -53,8 +53,8 @@ abstract contract Receiver {
     function onERC1155BatchReceived(
         address,
         address,
-        uint256[] calldata,
-        uint256[] calldata,
+        uint[] calldata,
+        uint[] calldata,
         bytes calldata
     ) public payable virtual returns (bytes4) {
         return this.onERC1155BatchReceived.selector;

@@ -6,7 +6,7 @@ pragma solidity 0.8.20;
 abstract contract ReentrancyGuard {
     error Reentrancy();
 
-    uint256 guard = 1;
+    uint guard = 1;
 
     modifier nonReentrant() {
         setReentrancyGuard();
