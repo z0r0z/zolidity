@@ -7,7 +7,6 @@ import './util/mock/MockERC20.sol';
 contract ERC20Test is Test {
     using stdStorage for StdStorage;
 
-    string META = 'META';
     uint constant ethSum = 100 ether;
     address immutable alice = vm.addr(1);
 
@@ -17,12 +16,12 @@ contract ERC20Test is Test {
 
     function setUp() public payable {
         console.log(unicode'🧪 Testing ERC20...');
-        tkn = new MockERC20(META, META);
+        tkn = new MockERC20();
         tkn.mint(alice, ethSum);
     }
 
     function testDeploy() public payable {
-        new MockERC20(META, META);
+        new MockERC20();
     }
 
     function _safeTransfer(address from, address to, uint amt) internal {

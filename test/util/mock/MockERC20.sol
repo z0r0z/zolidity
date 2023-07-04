@@ -4,8 +4,8 @@ pragma solidity 0.8.20;
 import '../../../src/tkn/ERC20.sol';
 
 /// @dev Mock ERC20 contract
-contract MockERC20 is ERC20 {
-    constructor(string memory name, string memory symbol) payable ERC20(name, symbol) {}
+contract MockERC20 is ERC20('TEST', 'TEST', 0) {
+    constructor() payable {}
 
     function mint(address to, uint amt) external payable {
         _mint(to, amt);

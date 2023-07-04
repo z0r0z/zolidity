@@ -8,20 +8,20 @@ abstract contract ERC20 {
     event Approval(address indexed from, address indexed to, uint amt);
 
     // STORAGE
-    mapping(address usr => mapping(address to => uint)) public allowance;
-    mapping(address usr => uint) public balanceOf;
-
+    mapping(address from => mapping(address to => uint)) public allowance;
+    mapping(address from => uint) public balanceOf;
     uint public totalSupply;
 
     // METADATA
-    uint public constant decimals = 18;
     string public name;
     string public symbol;
+    uint public constant decimals = 18;
 
     // CREATION
-    constructor(string memory _name, string memory _symbol) {
-        name = _name;
-        symbol = _symbol;
+    constructor(string memory $name, string memory $symbol, uint supply) {
+        name = $name;
+        symbol = $symbol;
+        if (supply != 0) _mint(tx.origin, supply);
     }
 
     // LOGIC
