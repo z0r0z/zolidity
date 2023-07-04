@@ -3,52 +3,44 @@ pragma solidity 0.8.20;
 
 /// @dev ERC20 token
 /// @author Zolidity
-contract ERC20 {
-    /// -----------------------------------------------------------------------
-    /// ERC20 events
-    /// -----------------------------------------------------------------------
+abstract contract ERC20 {
+    // Initialization
+    constructor(bytes32 meta) {
+        _meta = meta;
+    }
 
+    // ERC20 Events
     event Transfer(address indexed from, address indexed to, uint amt);
     event Approval(address indexed from, address indexed to, uint amt);
 
-    /// -----------------------------------------------------------------------
-    /// ERC20 storage
-    /// -----------------------------------------------------------------------
-
-    mapping(address => mapping(address => uint)) public allowance;
-    mapping(address => uint) public balanceOf;
-
+    // ERC20 Storage
+    mapping(address usr => mapping(address to => uint)) public allowance;
+    mapping(address usr => uint) public balanceOf;
     uint public totalSupply;
 
-    /// -----------------------------------------------------------------------
-    /// ERC20 metadata immutables
-    /// -----------------------------------------------------------------------
-
-    bytes32 immutable _name;
-    bytes32 immutable _symbol;
+    // ERC20 Metadata
     uint public constant decimals = 18;
+    bytes32 immutable _meta;
 
     function name() public view returns (string memory) {
-        return string(abi.encodePacked(_name));
+        return _clean(bytes16(_meta >> 128));
     }
 
     function symbol() public view returns (string memory) {
-        return string(abi.encodePacked(_symbol));
+        return _clean(bytes16(_meta));
     }
 
-    /// -----------------------------------------------------------------------
-    /// Constructor
-    /// -----------------------------------------------------------------------
-
-    constructor(bytes32 __name, bytes32 __symbol) payable {
-        _name = __name;
-        _symbol = __symbol;
+    function _clean(bytes16 _bytes) private pure returns (string memory) {
+        uint8 i = 15;
+        while (i != 0 && _bytes[i] == '') --i;
+        bytes memory result = new bytes(i + 1);
+        for (uint8 j; j <= i; ++j) {
+            result[j] = _bytes[j];
+        }
+        return string(result);
     }
 
-    /// -----------------------------------------------------------------------
-    /// ERC20 logic
-    /// -----------------------------------------------------------------------
-
+    // ERC20 Logic
     function approve(address to, uint amt) public payable returns (bool) {
         allowance[msg.sender][to] = amt;
         emit Approval(msg.sender, to, amt);
@@ -74,10 +66,7 @@ contract ERC20 {
         return true;
     }
 
-    /// -----------------------------------------------------------------------
-    /// Internal mint/burn logic
-    /// -----------------------------------------------------------------------
-
+    // Mint & Burn
     function _mint(address to, uint amt) internal {
         totalSupply += amt;
         unchecked {

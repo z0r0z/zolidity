@@ -17,12 +17,12 @@ contract ERC20Test is Test {
 
     function setUp() public payable {
         console.log(unicode'🧪 Testing ERC20...');
-        tkn = new MockERC20(META, META);
+        tkn = new MockERC20(META);
         tkn.mint(alice, ethSum);
     }
 
     function testDeploy() public payable {
-        new MockERC20(META, META);
+        new MockERC20(META);
     }
 
     function _safeTransfer(address from, address to, uint amt) internal {
