@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity 0.8.20;
+pragma solidity >=0.8.0;
 
 /// @dev ERC20 token
 /// @author Zolidity
@@ -21,23 +21,24 @@ contract ERC20 {
     constructor(string memory $name, string memory $symbol, uint supply) {
         name = $name;
         symbol = $symbol;
-        if (supply != 0) totalSupply = balanceOf[tx.origin] = supply;
+        if (supply != 0) 
+        emit Transfer(address(0), tx.origin, totalSupply = balanceOf[tx.origin] = supply);
     }
 
     // LOGIC
-    function approve(address to, uint amt) public payable returns (bool) {
+    function approve(address to, uint amt) public payable virtual returns (bool) {
         allowance[msg.sender][to] = amt;
         emit Approval(msg.sender, to, amt);
         return true;
     }
 
-    function transfer(address to, uint amt) public payable returns (bool) {
+    function transfer(address to, uint amt) public payable virtual returns (bool) {
         return transferFrom(msg.sender, to, amt);
     }
 
-    function transferFrom(address from, address to, uint amt) public payable returns (bool) {
-        if (msg.sender != from)
-            if (allowance[from][msg.sender] != type(uint).max)
+    function transferFrom(address from, address to, uint amt) public payable virtual returns (bool) {
+        if (msg.sender != from) 
+            if (allowance[from][msg.sender] != type(uint).max) 
                 allowance[from][msg.sender] -= amt;
         balanceOf[from] -= amt;
         unchecked {
@@ -48,7 +49,7 @@ contract ERC20 {
     }
 
     // EXT: MINT/BURN
-    function _mint(address to, uint amt) internal {
+    function _mint(address to, uint amt) internal virtual {
         totalSupply += amt;
         unchecked {
             balanceOf[to] += amt;
@@ -56,7 +57,7 @@ contract ERC20 {
         emit Transfer(address(0), to, amt);
     }
 
-    function _burn(address from, uint amt) internal {
+    function _burn(address from, uint amt) internal virtual {
         balanceOf[from] -= amt;
         unchecked {
             totalSupply -= amt;

@@ -1,5 +1,5 @@
 ERC20Test:testApprove() (gas: 28738)
-ERC20Test:testDeploy() (gas: 527337)
+ERC20Test:testDeploy() (gas: 529153)
 ERC20Test:testFailDeploySupplyOverflow() (gas: 235)
 ERC20Test:testFailTransferExceedsBalance() (gas: 5715)
 ERC20Test:testFailTransferFromExceedsAllowance() (gas: 31898)

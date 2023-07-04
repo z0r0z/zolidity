@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity 0.8.20;
+pragma solidity >=0.8.0;
 
-import {safeTransferETH} from './SafeTransfer.sol';
 import './ReentrancyGuard.sol';
+import {safeTransferETH} from './SafeTransfer.sol';
 
 /// @dev Gas refund logic
 /// @author Zolidity
@@ -16,7 +16,7 @@ abstract contract Refunded is ReentrancyGuard {
 
     /// @dev Modified functions over 21k gas
     ///      benefit most from refund
-    modifier refunded() {
+    modifier refunded() virtual {
         // Memo starting gas
         uint refund = gasleft();
 
