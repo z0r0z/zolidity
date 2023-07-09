@@ -26,9 +26,8 @@ contract ERC20 {
     ) {
         name = $name;
         symbol = $symbol;
-        if (amt != 0) {
+        if (amt != 0)
             emit Transfer(address(0), to, totalSupply = balanceOf[to] = amt);
-        }
     }
 
     // LOGIC
@@ -58,11 +57,9 @@ contract ERC20 {
         virtual
         returns (bool)
     {
-        if (msg.sender != from) {
-            if (allowance[from][msg.sender] != type(uint).max) {
+        if (msg.sender != from)
+            if (allowance[from][msg.sender] != type(uint).max)
                 allowance[from][msg.sender] -= amt;
-            }
-        }
         balanceOf[from] -= amt;
         unchecked {
             balanceOf[to] += amt;
