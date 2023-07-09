@@ -18,28 +18,51 @@ contract ERC20 {
     uint public constant decimals = 18;
 
     // CREATION
-    constructor(string memory $name, string memory $symbol, uint supply) {
+    constructor(
+        string memory $name,
+        string memory $symbol,
+        address to,
+        uint amt
+    ) {
         name = $name;
         symbol = $symbol;
-        if (supply != 0) 
-        emit Transfer(address(0), tx.origin, totalSupply = balanceOf[tx.origin] = supply);
+        if (amt != 0) {
+            emit Transfer(address(0), to, totalSupply = balanceOf[to] = amt);
+        }
     }
 
     // LOGIC
-    function approve(address to, uint amt) public payable virtual returns (bool) {
+    function approve(address to, uint amt)
+        public
+        payable
+        virtual
+        returns (bool)
+    {
         allowance[msg.sender][to] = amt;
         emit Approval(msg.sender, to, amt);
         return true;
     }
 
-    function transfer(address to, uint amt) public payable virtual returns (bool) {
+    function transfer(address to, uint amt)
+        public
+        payable
+        virtual
+        returns (bool)
+    {
         return transferFrom(msg.sender, to, amt);
     }
 
-    function transferFrom(address from, address to, uint amt) public payable virtual returns (bool) {
-        if (msg.sender != from) 
-            if (allowance[from][msg.sender] != type(uint).max) 
+    function transferFrom(address from, address to, uint amt)
+        public
+        payable
+        virtual
+        returns (bool)
+    {
+        if (msg.sender != from) {
+            if (allowance[from][msg.sender] != type(uint).max) {
                 allowance[from][msg.sender] -= amt;
+            }
+        }
         balanceOf[from] -= amt;
         unchecked {
             balanceOf[to] += amt;

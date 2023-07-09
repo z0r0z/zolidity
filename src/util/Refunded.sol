@@ -17,29 +17,21 @@ abstract contract Refunded is ReentrancyGuard {
     /// @dev Modified functions over 21k gas
     ///      benefit most from refund
     modifier refunded() virtual {
-        // Memo starting gas
         uint refund = gasleft();
-
         setReentrancyGuard();
-
         // Check malicious refund
         unchecked {
             if (tx.gasprice > block.basefee + GAS_PRICE_MAX) {
                 revert GasMax(address(this));
             }
         }
-
         _;
-
-        // Memo ending gas
-        // (BASE_COST + (refund - gasleft())) * tx.gasprice
-        assembly {
-            refund := mul(add(BASE_COST, sub(refund, gas())), gasprice())
+        // Memo spent gas
+        unchecked {
+            refund = (BASE_COST + (refund - gasleft())) * tx.gasprice;
         }
-
         // Refund gas fee
         safeTransferETH(tx.origin, refund);
-
         clearReentrancyGuard();
     }
 }

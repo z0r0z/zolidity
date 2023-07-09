@@ -9,12 +9,12 @@ contract MockRefunded is Refunded {
 
     /// @dev Refunded transaction,
     /// where *most* of gas-cost returned to caller (tx.origin)
-    function foo() external payable refunded {
+    function foo() public payable refunded {
         expensive();
     }
 
     /// @dev Unrefunded transaction, for testing & comparison
-    function bar() external payable {
+    function bar() public payable {
         expensive();
     }
 

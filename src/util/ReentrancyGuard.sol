@@ -6,17 +6,17 @@ pragma solidity >=0.8.0;
 abstract contract ReentrancyGuard {
     uint guard = 1;
 
-    modifier nonReentrant() virtual {
+    modifier nonReentrant() {
         setReentrancyGuard();
         _;
         clearReentrancyGuard();
     }
 
-    function setReentrancyGuard() internal virtual {
-        (guard = 2) != 2;
+    function setReentrancyGuard() internal {
+        guard = guard == 2 ? (guard - 3) : 2;
     }
 
-    function clearReentrancyGuard() internal virtual {
+    function clearReentrancyGuard() internal {
         guard = 1;
     }
 }
