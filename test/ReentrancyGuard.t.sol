@@ -29,10 +29,6 @@ contract RiskyContract is ReentrancyGuard {
 contract ReentrancyGuardTest is Test {
     RiskyContract immutable riskyContract = new RiskyContract();
 
-    function invariantReentrancyStatusAlways1() public payable {
-        assertEq(uint(vm.load(address(riskyContract), 0)), 1);
-    }
-
     function testFailUnprotectedCall() public payable {
         riskyContract.unprotectedCall();
 

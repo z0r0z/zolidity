@@ -1,7 +1,5 @@
 [profile.default]
-solc_version = '0.8.20'
-evm_version = 'paris'
-auto_detect_solc = false
+solc_version = '0.8.23'
 optimizer = true
 optimizer_runs = 9_999_999
 
@@ -9,3 +7,6 @@ optimizer_runs = 9_999_999
 quote_style = 'single'
 int_types = 'short'
 line_length = 77
+
+[profile.via-ir]
+via_ir = true

@@ -4,12 +4,12 @@ pragma solidity >=0.8.0;
 /// @dev ERC20 token
 /// @author Zolidity
 contract ERC20 {
-    event Transfer(address indexed from, address indexed to, uint amt);
-    event Approval(address indexed from, address indexed to, uint amt);
+    event Transfer(address indexed by, address indexed to, uint amt);
+    event Approval(address indexed by, address indexed to, uint amt);
 
     // STORAGE
-    mapping(address from => mapping(address to => uint)) public allowance;
-    mapping(address from => uint) public balanceOf;
+    mapping(address usr => mapping(address mgmt => uint)) public allowance;
+    mapping(address usr => uint) public balanceOf;
     uint public totalSupply;
 
     // METADATA
@@ -26,8 +26,9 @@ contract ERC20 {
     ) {
         name = $name;
         symbol = $symbol;
-        if (amt != 0)
+        if (amt != 0) {
             emit Transfer(address(0), to, totalSupply = balanceOf[to] = amt);
+        }
     }
 
     // LOGIC
@@ -51,20 +52,22 @@ contract ERC20 {
         return transferFrom(msg.sender, to, amt);
     }
 
-    function transferFrom(address from, address to, uint amt)
+    function transferFrom(address by, address to, uint amt)
         public
         payable
         virtual
         returns (bool)
     {
-        if (msg.sender != from)
-            if (allowance[from][msg.sender] != type(uint).max)
-                allowance[from][msg.sender] -= amt;
-        balanceOf[from] -= amt;
+        if (msg.sender != by) {
+            if (allowance[by][msg.sender] != type(uint).max) {
+                allowance[by][msg.sender] -= amt;
+            }
+        }
+        balanceOf[by] -= amt;
         unchecked {
             balanceOf[to] += amt;
         }
-        emit Transfer(from, to, amt);
+        emit Transfer(by, to, amt);
         return true;
     }
 
@@ -77,11 +80,11 @@ contract ERC20 {
         emit Transfer(address(0), to, amt);
     }
 
-    function _burn(address from, uint amt) internal virtual {
-        balanceOf[from] -= amt;
+    function _burn(address by, uint amt) internal virtual {
+        balanceOf[by] -= amt;
         unchecked {
             totalSupply -= amt;
         }
-        emit Transfer(from, address(0), amt);
+        emit Transfer(by, address(0), amt);
     }
 }

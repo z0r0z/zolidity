@@ -25,15 +25,10 @@ function safeTransfer(address token, address to, uint amt) {
     }
 }
 
-function safeTransferFrom(
-    address token,
-    address from,
-    address to,
-    uint amt
-) {
-    (bool success, bytes memory data) = token.call(
+function safeTransferFrom(address tkn, address by, address to, uint amt) {
+    (bool success, bytes memory data) = tkn.call(
         abi.encodeWithSignature(
-            'transferFrom(address,address,uint)', from, to, amt
+            'transferFrom(address,address,uint)', by, to, amt
         )
     );
     if (!success || (data.length != 0 && !abi.decode(data, (bool)))) {
