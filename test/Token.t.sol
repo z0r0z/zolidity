@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
-import 'forge-std/Test.sol';
 import './util/mock/MockERC20.sol';
+import 'forge-std/Test.sol';
 
-contract ERC20Test is Test {
-    using stdStorage for StdStorage;
-
+contract TokenTest is Test {
     MockERC20 immutable tkn = new MockERC20(
-        'Test', 'TEST', address(0), 0);
+        'Test', 'TEST', address(this), bigAmt);
     address immutable tester = address(this);
     address immutable alice = vm.addr(1);
     address immutable bob = vm.addr(2);
@@ -17,7 +15,6 @@ contract ERC20Test is Test {
 
     function setUp() public payable {
         console.log(unicode'🧪 Testing ERC20...');
-        tkn.mint(tester, bigAmt);
     }
 
     function testDeploy() public payable {
