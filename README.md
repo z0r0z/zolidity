@@ -1,4 +1,2 @@
 # Zolidity
-Zero-fuss smart contracts.
-
-Experiments on Ethereum.
+Zero-fuss smart contracts
