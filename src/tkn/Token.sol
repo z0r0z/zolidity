@@ -1,50 +1,69 @@
-// SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity >=0.8.0;
+// SPDX-License-Identifier: VPL
+pragma solidity 0.8.26;
 
-/// @dev Zolidity ERC20 token formatted for fixed-supply deployments.
 contract Token {
-    event Transfer(address indexed by, address indexed to, uint amt);
-    event Approval(address indexed by, address indexed to, uint amt);
+    event Transfer(address indexed from, address indexed to, uint256 amount);
+    event Approval(address indexed from, address indexed to, uint256 amount);
+    event OwnershipTransferred(address indexed from, address indexed to);
 
-    mapping(address => mapping(address => uint)) public allowance;
-    mapping(address => uint) public balanceOf;
-    uint public constant decimals = 18;
-    uint public totalSupply;
-    string public symbol;
     string public name;
+    string public symbol;
+    uint256 public constant decimals = 18;
+    uint256 public totalSupply;
+    address public owner;
+    
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
 
-    constructor(
-        string memory $symbol,
-        string memory $name,
-        address to,
-        uint amt
-    ) payable {
-        emit Transfer(address(0), to, totalSupply = balanceOf[to] = amt);
-        symbol = $symbol;
-        name = $name;
+    constructor(string memory _name, string memory _symbol, uint256 _supply, address _owner) payable {
+        (name, symbol) = (_name, _symbol);
+        balanceOf[owner = _owner] = totalSupply = _supply;
     }
 
-    function approve(address to, uint amt) public payable returns (bool) {
-        emit Approval(msg.sender, to, amt);
-        allowance[msg.sender][to] = amt;
+    function approve(address to, uint256 amount) public returns (bool) {
+        allowance[msg.sender][to] = amount;
+        emit Approval(msg.sender, to, amount);
         return true;
     }
 
-    function transfer(address to, uint amt) public payable returns (bool) {
-        return transferFrom(msg.sender, to, amt);
+    function transfer(address to, uint256 amount) public returns (bool) {
+        return transferFrom(msg.sender, to, amount);
     }
 
-    function transferFrom(address by, address to, uint amt)
-        public
-        payable
-        returns (bool)
-    {
-        if (by != msg.sender) allowance[by][msg.sender] -= amt;
-        emit Transfer(by, to, amt);
+    function transferFrom(address from, address to, uint256 amount) public returns (bool) {
+        if (msg.sender != from)
+            if (allowance[from][msg.sender] != type(uint256).max)
+                allowance[from][msg.sender] -= amount;
+        balanceOf[from] -= amount;
+        unchecked { balanceOf[to] += amount; }
+        emit Transfer(from, to, amount);
+        return true;
+    }
+
+    function transferOwnership(address to) public onlyOwner {
+        emit OwnershipTransferred(msg.sender, owner = to);
+    }
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        totalSupply += amount;
         unchecked {
-            balanceOf[to] += amt;
+            balanceOf[to] += amount;
         }
-        balanceOf[by] -= amt;
-        return true;
+        emit Transfer(address(0), to, amount);
+    }
+
+    function burn(address from, uint256 amount) public onlyOwner {
+        balanceOf[from] -= amount;
+        unchecked {
+            totalSupply -= amount;
+        }
+        emit Transfer(from, address(0), amount);
+    }
+
+    error Unauthorized();
+
+    modifier onlyOwner {
+        if (msg.sender != owner) revert Unauthorized();
+        _;
     }
 }
