@@ -1,22 +1,22 @@
-// SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity >=0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
 /// @dev Reentrancy guard logic
 /// @author Zolidity
 abstract contract ReentrancyGuard {
     uint guard = 1;
 
-    modifier nonReentrant() {
+    modifier nonReentrant() virtual {
         setReentrancyGuard();
         _;
         clearReentrancyGuard();
     }
 
-    function setReentrancyGuard() internal {
+    function setReentrancyGuard() internal virtual {
         guard = guard == 2 ? (guard - 3) : 2;
     }
 
-    function clearReentrancyGuard() internal {
+    function clearReentrancyGuard() internal virtual {
         guard = 1;
     }
 }
