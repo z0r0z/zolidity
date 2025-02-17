@@ -11,7 +11,9 @@ abstract contract ERC173 {
     address public owner;
 
     modifier onlyOwner() virtual {
-        require(msg.sender == owner, Unauthorized());
+        if (msg.sender != owner) {
+            revert Unauthorized();
+        }
         _;
     }
 
