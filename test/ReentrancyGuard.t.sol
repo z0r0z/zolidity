@@ -1,60 +1,43 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.19;
 
-import {DSTestPlus} from "@solbase/test/utils/DSTestPlus.sol";
+import {Test} from "@forge/Test.sol";
+import {ReentrancyGuard} from "../src/ReentrancyGuard.sol";
 
-import {ReentrancyGuard} from "../src/utils/ReentrancyGuard.sol";
+contract MockReentrant is ReentrancyGuard {
+    uint256 public counter;
 
-contract RiskyContract is ReentrancyGuard {
-    uint256 public enterTimes;
-
-    function unprotectedCall() public {
-        enterTimes++;
-
-        if (enterTimes > 1) {
-            return;
-        }
-
-        this.protectedCall();
+    function protectedFunction() external nonReentrant {
+        counter++;
+        if (counter == 1) this.protectedFunction();
     }
 
-    function protectedCall() public nonReentrant {
-        enterTimes++;
-
-        if (enterTimes > 1) {
-            return;
-        }
-
-        this.protectedCall();
+    function unprotectedFunction() external {
+        counter++;
+        if (counter == 1) this.unprotectedFunction();
     }
-
-    function overprotectedCall() public nonReentrant {}
 }
 
-contract ReentrancyGuardTest is DSTestPlus {
-    RiskyContract riskyContract;
+contract ReentrancyGuardTest is Test {
+    MockReentrant mock;
 
     function setUp() public {
-        riskyContract = new RiskyContract();
+        mock = new MockReentrant();
     }
 
-    function invariantReentrancyStatusAlways1() public {
-        assertEq(uint256(hevm.load(address(riskyContract), 0)), 1);
+    function testProtectedFunctionPreventsReentrancy() public {
+        vm.expectRevert(ReentrancyGuard.Reentrancy.selector);
+        mock.protectedFunction();
     }
 
-    function testFailUnprotectedCall() public {
-        riskyContract.unprotectedCall();
-
-        assertEq(riskyContract.enterTimes(), 1);
+    function testUnprotectedFunctionAllowsReentrancy() public {
+        mock.unprotectedFunction();
+        assertEq(mock.counter(), 2);
     }
 
-    function testProtectedCall() public {
-        try riskyContract.protectedCall() {
-            fail("Reentrancy Guard Failed To Stop Attacker");
-        } catch {}
-    }
-
-    function testNoReentrancy() public {
-        riskyContract.overprotectedCall();
+    function testGuardValueReset() public {
+        try mock.protectedFunction() {} catch {}
+        uint256 slot0 = uint256(vm.load(address(mock), bytes32(0)));
+        assertEq(slot0, 1, "Guard should be reset to 1");
     }
 }

@@ -1,16 +1,17 @@
 [profile.default]
-solc = "0.8.19"
+solc_version = "0.8.28"
+evm_version = "cancun"
+
 optimizer = true
 optimizer_runs = 9_999_999
 
-# Configure remappings
 remappings = [
-  "@std=lib/forge-std/src/",
-  "@solbase=lib/solbase/"
+  "@solady=lib/solady/",
+  "@forge=lib/forge-std/src/"
 ]
 
-[profile.intense.fuzz]
-runs = 5_000
+[profile.via-ir]
+via_ir = true
 
 [fmt]
 line_length = 100
