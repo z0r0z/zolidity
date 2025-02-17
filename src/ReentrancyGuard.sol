@@ -15,7 +15,7 @@ abstract contract ReentrancyGuard {
     }
 
     function _setReentrancyGuard() internal virtual {
-        require(_guard != 2, Reentrancy());
+        require(_guard == 1, Reentrancy());
         _guard = 2;
     }
 

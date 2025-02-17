@@ -1,4 +1,4 @@
-# [zolidity](https://github.com/z0r0z/zolidity) [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](https://opensource.org/license/mit) [![solidity](https://img.shields.io/badge/solidity-%5E0.8.28-black)](https://docs.soliditylang.org/en/v0.8.28/) [![Foundry](https://img.shields.io/badge/Built%20with-Foundry-000000.svg)](https://getfoundry.sh/) ![tests](https://github.com/z0r0z/zzz/actions/workflows/ci.yml/badge.svg)
+# [zolidity](https://github.com/z0r0z/zolidity) [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](https://opensource.org/license/mit) [![solidity](https://img.shields.io/badge/solidity-%5E0.8.28-black)](https://docs.soliditylang.org/en/v0.8.28/) [![Foundry](https://img.shields.io/badge/Built%20with-Foundry-000000.svg)](https://getfoundry.sh/) ![tests](https://github.com/z0r0z/zolidity/actions/workflows/ci.yml/badge.svg)
 
 `Zolidity`: Zero-to-One Solidity with Simplicity-first.
 
