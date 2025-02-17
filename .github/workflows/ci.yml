@@ -1,0 +1,36 @@
+name: ci
+
+on: [push]
+
+jobs:
+  tests:
+    name: Forge Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      - name: dependencies
+        run: forge install
+      - name: tests
+        run: forge test
+
+  snapshot:
+    name: Forge Snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      - name: dependencies
+        run: forge install
+      - name: check contract sizes
+        run: forge build --sizes
+      - name: check gas snapshots
+        run: forge snapshot --check
