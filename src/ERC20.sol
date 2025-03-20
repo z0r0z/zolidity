@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 /// @notice Standard fungible token.
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ERC20.sol)

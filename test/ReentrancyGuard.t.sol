@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 import {Test} from "@forge/Test.sol";
 import {ReentrancyGuard} from "../src/ReentrancyGuard.sol";

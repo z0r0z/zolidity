@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 import {ERC20} from "../../../src/ERC20.sol";
 import {Brutalizer} from "@solady/test/utils/Brutalizer.sol";

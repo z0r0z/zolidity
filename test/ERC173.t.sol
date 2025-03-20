@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 import {SoladyTest} from "@solady/test/utils/SoladyTest.sol";
 import {ERC173, MockERC173} from "./utils/mocks/MockERC173.sol";

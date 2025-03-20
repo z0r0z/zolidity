@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 /// @notice Reentrant call guard.
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ReentrancyGuard.sol)
@@ -15,9 +15,7 @@ abstract contract ReentrancyGuard {
     }
 
     function _setReentrancyGuard() internal virtual {
-        if (_guard != 1) {
-            revert Reentrancy();
-        }
+        require(_guard == 1, Reentrancy());
         _guard = 2;
     }
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 /// @notice Standard contract ownership.
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ERC173.sol)
@@ -11,9 +11,7 @@ abstract contract ERC173 {
     address public owner;
 
     modifier onlyOwner() virtual {
-        if (msg.sender != owner) {
-            revert Unauthorized();
-        }
+        require(msg.sender == owner, Unauthorized());
         _;
     }
 

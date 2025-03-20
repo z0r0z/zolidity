@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 import {MockERC20} from "./utils/mocks/MockERC20.sol";
 import {InvariantTest} from "@solady/test/utils/InvariantTest.sol";
