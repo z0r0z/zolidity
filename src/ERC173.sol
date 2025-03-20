@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
-/// @notice Standard contract ownership.
+/// @notice Standard contract ownership (https://eips.ethereum.org/EIPS/eip-173).
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ERC173.sol)
 abstract contract ERC173 {
     event OwnershipTransferred(address indexed from, address indexed to);
@@ -11,17 +11,15 @@ abstract contract ERC173 {
     address public owner;
 
     modifier onlyOwner() virtual {
-        if (msg.sender != owner) {
-            revert Unauthorized();
-        }
+        require(msg.sender == owner, Unauthorized());
         _;
     }
 
-    function _setOwner(address to) internal virtual {
-        emit OwnershipTransferred(msg.sender, owner = to);
+    constructor(address _owner) {
+        emit OwnershipTransferred(address(0), owner = _owner);
     }
 
-    function transferOwnership(address to) public virtual onlyOwner {
-        _setOwner(to);
+    function transferOwnership(address _owner) public payable virtual onlyOwner {
+        emit OwnershipTransferred(msg.sender, owner = _owner);
     }
 }

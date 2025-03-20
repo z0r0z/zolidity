@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
-/// @notice Standard fungible token.
+/// @notice Standard fungible token (https://eips.ethereum.org/EIPS/eip-20).
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ERC20.sol)
 abstract contract ERC20 {
     event Approval(address indexed from, address indexed to, uint256 amount);
@@ -16,7 +16,7 @@ abstract contract ERC20 {
     mapping(address holder => uint256) public balanceOf;
     mapping(address holder => mapping(address spender => uint256)) public allowance;
 
-    constructor(string memory _name, string memory _symbol) payable {
+    constructor(string memory _name, string memory _symbol) {
         (name, symbol) = (_name, _symbol);
     }
 
