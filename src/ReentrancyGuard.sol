@@ -9,17 +9,9 @@ abstract contract ReentrancyGuard {
     uint256 internal _guard = 1;
 
     modifier nonReentrant() virtual {
-        _setReentrancyGuard();
-        _;
-        _clearReentrancyGuard();
-    }
-
-    function _setReentrancyGuard() internal virtual {
         require(_guard == 1, Reentrancy());
         _guard = 2;
-    }
-
-    function _clearReentrancyGuard() internal virtual {
+        _;
         _guard = 1;
     }
 }

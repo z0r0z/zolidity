@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-/// @notice Standard fungible token.
+/// @notice Standard fungible token (https://eips.ethereum.org/EIPS/eip-20).
 /// @author Zolidity (https://github.com/z0r0z/zolidity/blob/main/src/ERC20.sol)
 abstract contract ERC20 {
     event Approval(address indexed from, address indexed to, uint256 amount);
@@ -27,15 +27,16 @@ abstract contract ERC20 {
     }
 
     function transfer(address to, uint256 amount) public virtual returns (bool) {
-        return transferFrom(msg.sender, to, amount);
+        balanceOf[msg.sender] -= amount;
+        unchecked {
+            balanceOf[to] += amount;
+        }
+        emit Transfer(msg.sender, to, amount);
+        return true;
     }
 
     function transferFrom(address from, address to, uint256 amount) public virtual returns (bool) {
-        if (from != msg.sender) {
-            if (allowance[from][msg.sender] != type(uint256).max) {
-                allowance[from][msg.sender] -= amount;
-            }
-        }
+        if (allowance[from][msg.sender] != type(uint256).max) allowance[from][msg.sender] -= amount;
         balanceOf[from] -= amount;
         unchecked {
             balanceOf[to] += amount;

@@ -5,16 +5,10 @@ import {ERC173} from "../../../src/ERC173.sol";
 import {Brutalizer} from "@solady/test/utils/Brutalizer.sol";
 
 /// @notice Standard test contract ownership.
-contract MockERC173 is ERC173, Brutalizer {
+contract MockERC173 is ERC173(msg.sender), Brutalizer {
     bool public flag;
 
-    constructor() payable {
-        _setOwner(msg.sender);
-    }
-
-    function setOwnerDirect(address to) public {
-        _setOwner(_brutalized(to));
-    }
+    constructor() payable {}
 
     function transferOwnership(address to) public virtual override(ERC173) {
         super.transferOwnership(_brutalized(to));

@@ -8,6 +8,7 @@ import {ERC173, MockERC173} from "./utils/mocks/MockERC173.sol";
 /// - The only changes are the following as they are not used in Zolidity ERC173:
 /// - - Remove initialization tests (`_setOwner` is recycled throughout ERC173)
 /// - - Remove Handover tests (no two-step pattern in ERC173 specification)
+/// - - Remove direct set owner tests (not included method in Zolidity)
 contract ERC173Test is SoladyTest {
     event OwnershipTransferred(address indexed from, address indexed to);
 
@@ -15,17 +16,6 @@ contract ERC173Test is SoladyTest {
 
     function setUp() public {
         mockERC173 = new MockERC173();
-    }
-
-    function testSetOwnerDirect(address newOwner) public {
-        vm.expectEmit(true, true, true, true);
-        emit OwnershipTransferred(address(this), _cleaned(newOwner));
-        mockERC173.setOwnerDirect(newOwner);
-        assertEq(mockERC173.owner(), newOwner);
-    }
-
-    function testSetOwnerDirect() public {
-        testSetOwnerDirect(address(1));
     }
 
     function testTransferOwnership(
