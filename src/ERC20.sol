@@ -16,7 +16,7 @@ abstract contract ERC20 {
     mapping(address holder => uint256) public balanceOf;
     mapping(address holder => mapping(address spender => uint256)) public allowance;
 
-    constructor(string memory _name, string memory _symbol) payable {
+    constructor(string memory _name, string memory _symbol) {
         (name, symbol) = (_name, _symbol);
     }
 

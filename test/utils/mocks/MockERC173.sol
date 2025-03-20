@@ -10,7 +10,7 @@ contract MockERC173 is ERC173(msg.sender), Brutalizer {
 
     constructor() payable {}
 
-    function transferOwnership(address to) public virtual override(ERC173) {
+    function transferOwnership(address to) public payable virtual override(ERC173) {
         super.transferOwnership(_brutalized(to));
     }
 

@@ -19,7 +19,7 @@ abstract contract ERC173 {
         emit OwnershipTransferred(address(0), owner = _owner);
     }
 
-    function transferOwnership(address _owner) public virtual onlyOwner {
+    function transferOwnership(address _owner) public payable virtual onlyOwner {
         emit OwnershipTransferred(msg.sender, owner = _owner);
     }
 }
