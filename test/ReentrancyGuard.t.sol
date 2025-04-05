@@ -16,6 +16,14 @@ contract MockReentrant is ReentrancyGuard {
         counter++;
         if (counter == 1) this.unprotectedFunction();
     }
+
+    function getReentrancyGuard() external view returns (uint256 value) {
+        bytes32 slot = keccak256("zolidity.reentrancy.lock");
+        assembly {
+            // Load the transient storage value
+            value := tload(slot)
+        }
+    }
 }
 
 contract ReentrancyGuardTest is Test {
@@ -37,7 +45,7 @@ contract ReentrancyGuardTest is Test {
 
     function testGuardValueReset() public {
         try mock.protectedFunction() {} catch {}
-        uint256 slot0 = uint256(vm.load(address(mock), bytes32(0)));
-        assertEq(slot0, 1, "Guard should be reset to 1");
+        uint256 slotvalue = mock.getReentrancyGuard();
+        assertEq(slotvalue, 0, "Guard should be reset to 0");
     }
 }
